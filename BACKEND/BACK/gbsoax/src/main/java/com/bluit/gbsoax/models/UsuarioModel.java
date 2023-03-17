@@ -68,7 +68,6 @@ public class UsuarioModel {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
     public String getSexo() {
         return sexo;
     }
