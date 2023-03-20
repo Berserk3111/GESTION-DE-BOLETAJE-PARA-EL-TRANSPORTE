@@ -10,6 +10,14 @@ public class LoginModel {
     @Column( unique = true, nullable = false)
 
     private Long id_login;
+    public Long getId_login() {
+        return id_login;
+    }
+
+    public void setId_login(Long id_login) {
+        this.id_login = id_login;
+    }
+
     private String email;
     private String password;
 
