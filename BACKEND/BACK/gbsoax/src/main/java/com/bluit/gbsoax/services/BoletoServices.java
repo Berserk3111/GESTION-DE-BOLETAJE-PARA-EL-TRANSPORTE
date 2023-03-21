@@ -1,6 +1,7 @@
 package com.bluit.gbsoax.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,18 @@ public class BoletoServices {
 
     public BoletoModel guardarBoleto(BoletoModel boleto){
         return boletoRepository.save(boleto);
+    }
+
+    public Optional<BoletoModel> obtenerPorId(Long id){
+        return boletoRepository.findById(id);
+    }
+
+    public boolean eliminarBoleto(Long id){
+        try{
+            boletoRepository.deleteById(id);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.bluit.gbsoax.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,18 @@ public class CostosServices {
 
     public CostosModel guardarCostos(CostosModel costo){
         return costosRepository.save(costo);
+    }
+
+    public Optional<CostosModel> obtenerPorId(Long id){
+        return costosRepository.findById(id);
+    }
+
+    public boolean eliminarCosto(Long id){
+        try{
+            costosRepository.deleteById(id);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.bluit.gbsoax.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,17 @@ public class LoginServices {
   public LoginModel guardarLogin(LoginModel login){
     return loginRepository.save(login);
   }
+
+  public Optional<LoginModel> obtenerPorId(Long id){
+    return loginRepository.findById(id);
+}
+
+public boolean eliminarLogin(Long id){
+    try{
+        loginRepository.deleteById(id);
+        return true;
+    }catch(Exception err){
+        return false;
+    }
+}
 }

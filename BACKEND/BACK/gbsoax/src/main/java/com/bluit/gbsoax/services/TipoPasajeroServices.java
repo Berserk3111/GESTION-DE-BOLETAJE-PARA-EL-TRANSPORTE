@@ -1,6 +1,7 @@
 package com.bluit.gbsoax.services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,18 @@ public class TipoPasajeroServices {
 
     public TipoPasajeroModel guardarTipopasajero(TipoPasajeroModel tipopasajero){
         return tipoPasajeroRepository.save(tipopasajero);
+    }
+
+    public Optional<TipoPasajeroModel> obtenerPorId(Long id){
+        return tipoPasajeroRepository.findById(id);
+    }
+
+    public boolean eliminarTipoPasajero(Long id){
+        try{
+            tipoPasajeroRepository.deleteById(id);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
     }
 }
