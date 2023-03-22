@@ -28,8 +28,8 @@ public class UsuarioModel {
     }
     private String sexo;
     private String foto_perfil;
-    private Number numero_liecencia;
-    private Number numero_taquilla;
+    private Integer numero_liecencia;
+    private Integer numero_taquilla;
 
     @ManyToOne(fetch = 
     FetchType.EAGER)
@@ -80,16 +80,16 @@ public class UsuarioModel {
     public void setFoto_perfil(String foto_perfil) {
         this.foto_perfil = foto_perfil;
     }
-    public Number getNumero_liecencia() {
+    public Integer getNumero_liecencia() {
         return numero_liecencia;
     }
-    public void setNumero_liecencia(Number numero_liecencia) {
+    public void setNumero_liecencia(Integer numero_liecencia) {
         this.numero_liecencia = numero_liecencia;
     }
-    public Number getNumero_taquilla() {
+    public Integer getNumero_taquilla() {
         return numero_taquilla;
     }
-    public void setNumero_taquilla(Number numero_taquilla) {
+    public void setNumero_taquilla(Integer numero_taquilla) {
         this.numero_taquilla = numero_taquilla;
     }
     public Long getId()

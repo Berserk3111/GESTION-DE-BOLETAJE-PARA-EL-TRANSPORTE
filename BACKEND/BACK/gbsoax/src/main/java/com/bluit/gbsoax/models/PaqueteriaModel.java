@@ -10,17 +10,17 @@ public class PaqueteriaModel {
     @Column(unique = true,nullable = false)
 
     private Long id_paquete;
-    private Number largo;
-    private Number ancho;
-    private Number peso;
+    private Integer largo;
+    private Integer ancho;
+    private Integer peso;
     private String nombre_envia;
     private String nombre_recibe;
     private String destino;
     private String descripcion;
     private String correo;
-    private Number telefono;
-    private Number precio_total;
-    private Number num_seguimiento;
+    private Integer telefono;
+    private Integer precio_total;
+    private Integer num_seguimiento;
 
     @ManyToOne(fetch = 
     FetchType.EAGER)
@@ -50,22 +50,22 @@ public class PaqueteriaModel {
     public void setId_paquete(Long id_paquete) {
         this.id_paquete = id_paquete;
     }
-    public Number getLargo() {
+    public Integer getLargo() {
         return largo;
     }
-    public void setLargo(Number largo) {
+    public void setLargo(Integer largo) {
         this.largo = largo;
     }
-    public Number getAncho() {
+    public Integer getAncho() {
         return ancho;
     }
-    public void setAncho(Number ancho) {
+    public void setAncho(Integer ancho) {
         this.ancho = ancho;
     }
-    public Number getPeso() {
+    public Integer getPeso() {
         return peso;
     }
-    public void setPeso(Number peso) {
+    public void setPeso(Integer peso) {
         this.peso = peso;
     }
     public String getNombre_envia() {
@@ -98,22 +98,22 @@ public class PaqueteriaModel {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    public Number getTelefono() {
+    public Integer getTelefono() {
         return telefono;
     }
-    public void setTelefono(Number telefono) {
+    public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
-    public Number getPrecio_total() {
+    public Integer getPrecio_total() {
         return precio_total;
     }
-    public void setPrecio_total(Number precio_total) {
+    public void setPrecio_total(Integer precio_total) {
         this.precio_total = precio_total;
     }
-    public Number getNum_seguimiento() {
+    public Integer getNum_seguimiento() {
         return num_seguimiento;
     }
-    public void setNum_seguimiento(Number num_seguimiento) {
+    public void setNum_seguimiento(Integer num_seguimiento) {
         this.num_seguimiento = num_seguimiento;
     }
 

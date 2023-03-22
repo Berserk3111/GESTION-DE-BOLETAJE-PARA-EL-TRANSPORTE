@@ -10,17 +10,17 @@ public class CostosModel {
     @Column(unique = true, nullable = false)
     private Long id_costo;
     
-    private Number costo;
+    private Integer costo;
     public Long getId_costo() {
         return id_costo;
     }
     public void setId_costo(Long id_costo) {
         this.id_costo = id_costo;
     }
-    public Number getCosto() {
+    public Integer getCosto() {
         return costo;
     }
-    public void setCosto(Number costo) {
+    public void setCosto(Integer costo) {
         this.costo = costo;
     }
     @ManyToOne(fetch = 

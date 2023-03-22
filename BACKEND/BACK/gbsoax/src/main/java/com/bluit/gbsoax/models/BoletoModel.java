@@ -26,7 +26,7 @@ public class BoletoModel {
     private String apellido_materno;
     private Date fecha_nacimiento;
     private String email;
-    private Number telefono;
+    private Integer telefono;
 
     
 
@@ -122,7 +122,7 @@ public class BoletoModel {
         return telefono;
     }
 
-    public void setTelefono(Number telefono) {
+    public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
 }
