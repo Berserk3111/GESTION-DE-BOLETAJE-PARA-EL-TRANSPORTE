@@ -47,7 +47,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/login/")
+    @PostMapping("/iniciarSesion/")
     public ArrayList<LoginModel> login(@RequestHeader String email, @RequestHeader String password){
         return loginServices.login(email, password);
     }
