@@ -34,4 +34,18 @@ public boolean eliminarLogin(Long id){
         return false;
     }
 }
+
+public ArrayList<LoginModel> login (String email, String password){
+  ArrayList<LoginModel> clientes = (ArrayList<LoginModel>) loginRepository.findAll();
+  ArrayList<LoginModel> cliente = new ArrayList<>();
+  for(LoginModel c : clientes){
+    if(c.getEmail().equals(email) && c.getPassword().equals(password)){
+      cliente.add(c);
+    }else{
+      continue;
+    }
+  }
+  return cliente; 
+}
+
 }
