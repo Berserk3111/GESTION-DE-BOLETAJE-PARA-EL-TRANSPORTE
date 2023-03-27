@@ -12,15 +12,15 @@ class LoginProvider extends ChangeNotifier {
 
   login(email, password) async {
     var user = {};
-    var url = Uri.parse('http://10.0.2.2:8090/login/login/');
+    var url = Uri.parse('http://10.0.2.2:8090/login/iniciarSesion/');
     try {
       if (emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty) {
         var response = await http
             .post(url, headers: {'email': email, 'password': password});
         var datos = json.decode(utf8.decode(response.bodyBytes));
-        user = datos;
-        print(user);
+        datos;
+        print(datos);
       }
     } catch (e) {
       print(e);
