@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:gbs_oax/pages/components/card_widget.dart';
 import 'package:gbs_oax/pages/registro.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:provider/provider.dart';

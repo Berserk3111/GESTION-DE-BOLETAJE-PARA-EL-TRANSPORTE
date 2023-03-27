@@ -2,22 +2,22 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:gbs_oax/pages/components/card_widget.dart';
-import 'package:gbs_oax/providers/login_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-var nombreController = new TextEditingController();
-var apellidopatController = new TextEditingController();
-var apellidomatController = new TextEditingController();
-var fechanacimientoController = new TextEditingController();
-var sexoController = new TextEditingController();
-var telefonoController = new TextEditingController();
-var emailController = new TextEditingController();
-var passwordController = new TextEditingController();
-var repeatpassCtrlr = new TextEditingController();
-GlobalKey<FormState> keyForm = new GlobalKey();
+var nombreController = TextEditingController();
+var apellidopatController = TextEditingController();
+var apellidomatController = TextEditingController();
+var fechanacimientoController = TextEditingController();
+var sexoController = TextEditingController();
+var telefonoController = TextEditingController();
+var emailController = TextEditingController();
+var passwordController = TextEditingController();
+var repeatpassCtrlr = TextEditingController();
+
+  var fechai = 'INGRESA TU FECHA DE NACIMIENTO';
+
+GlobalKey<FormState> keyForm = GlobalKey();
 
 class Registro extends StatefulWidget {
   const Registro({super.key});
@@ -32,10 +32,10 @@ class _RegistroState extends State<Registro> {
     return SafeArea(
         child: Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      body: new SingleChildScrollView(
-          child: new Container(
+      body: SingleChildScrollView(
+          child: Container(
         margin: const EdgeInsets.all(25),
-        child: Form(),
+        child: form(),
       )),
     ));
   }
@@ -47,7 +47,7 @@ class _RegistroState extends State<Registro> {
     );
   }
 
-  Widget Form() {
+  Widget form() {
     return Center(
         child: Column(children: [_header(context), _bodyform(context)]));
   }
@@ -135,26 +135,49 @@ class _RegistroState extends State<Registro> {
               maxLength: 10,
               //: validateMobile,
             )),
-        formItemsDesign(
-            Icons.phone,
-            TextFormField(
-              controller: fechanacimientoController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide.none),
-                  fillColor: Color(0xfff3f4f6),
-                  filled: true,
-                  labelText: "Fecha de nacimiento"),
-              //: validateMobile,
-            )),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.black),
+            color: const Color.fromRGBO(248, 212, 90, 1),
+          ),
+          child: TextButton(
+              onPressed: () {
+                setState(() {
+                  getDatePickerWidget(context);
+                });
+              },
+              child: Text(
+                fechai,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              )),
+        ),
+        //formItemsDesign(
+        //    Icons.phone,
+        //    TextFormField(
+        //      controller: fechanacimientoController,
+        //      decoration: InputDecoration(
+        //          border: OutlineInputBorder(
+        //              borderRadius: BorderRadius.circular(50),
+        //              borderSide: BorderSide.none),
+        //          fillColor: Color(0xfff3f4f6),
+        //          filled: true,
+        //          labelText: "Fecha de nacimiento"),
+        //      //: validateMobile,
+        //    )),
         SizedBox(
           height: 50,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.date,
             initialDateTime: DateTime(1969, 1, 1),
             onDateTimeChanged: (DateTime newDateTime) {
-              // Do something
+              String formattedDate2 =
+                  DateFormat('yyyy-MM-dd').format(newDateTime);
+              fechai = formattedDate2;
+              fechanacimientoController.text = formattedDate2;
             },
           ),
         ),
@@ -240,10 +263,30 @@ class _RegistroState extends State<Registro> {
     );
   }
 
+  getDatePickerWidget(BuildContext context) async {
+    int anio = DateTime.now().year - 18;
+    int mes = DateTime.now().month;
+    int dia = DateTime.now().day;
+    DateTime mayor = DateTime(anio, mes, dia);
+    DateTime? seleccion = await showDatePicker(
+      context: context,
+      initialDate: mayor,
+      firstDate: DateTime(1900),
+      lastDate: mayor,
+    );
+    if (seleccion != null) {
+      setState(() {
+        String formattedDate2 = DateFormat('yyyy-MM-dd').format(seleccion);
+        fechai = formattedDate2;
+        fechanacimientoController.text = formattedDate2;
+      });
+    }
+  }
+
   String? validateEmail(String value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     if (value.length == 0) {
       return "El correo es necesario";
     } else if (!regExp.hasMatch(value)) {

@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/login.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
