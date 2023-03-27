@@ -19,7 +19,6 @@ class LoginProvider extends ChangeNotifier {
         var response = await http
             .post(url, headers: {'email': email, 'password': password});
         var datos = json.decode(utf8.decode(response.bodyBytes));
-        datos;
         print(datos);
       }
     } catch (e) {

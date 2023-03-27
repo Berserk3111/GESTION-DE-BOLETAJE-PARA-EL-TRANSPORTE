@@ -263,7 +263,7 @@ class _RegistroState extends State<Registro> {
                   if (value != passwordController.text) {
                     return "Las contraseñas no coinciden";
                   }
-                  return "";
+                  return null;
                 },
               )),
           ElevatedButton(

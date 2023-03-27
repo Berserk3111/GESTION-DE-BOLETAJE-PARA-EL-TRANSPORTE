@@ -13,17 +13,16 @@ class RegistroProvider extends ChangeNotifier {
   registro(formData, email, password) async {
     try {
       FormData formDatalogin = FormData.fromMap({});
-      await dio.post('http://10.0.2.2:8090/usuario', data: formData).then(
-          (value) async {
-            print(value);
-            FormData formDataLogin = FormData.fromMap({
-              'email': email,
-              'password': password,
-              'usuarioModel': 1
-            });
-                await dio.post('http://10.0.2.2:8090/login',
-                    data: formDatalogin);
-              });
+      await dio
+          .post('http://10.0.2.2:8090/usuario', data: formData)
+          .then((value) async {
+        FormData formDataLogin = FormData.fromMap({
+          'email': email,
+          'password': password,
+          'usuarioModel': value.data["id"]
+        });
+        await dio.post('http://10.0.2.2:8090/login', data: formDatalogin);
+      });
     } catch (e) {
       print(e);
     }

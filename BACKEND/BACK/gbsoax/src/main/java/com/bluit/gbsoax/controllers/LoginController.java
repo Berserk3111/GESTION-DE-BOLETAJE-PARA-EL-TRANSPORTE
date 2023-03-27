@@ -28,7 +28,7 @@ public class LoginController {
     }
 
     @PostMapping()
-    public LoginModel guardarLogin(@RequestBody LoginModel login){
+    public LoginModel guardarLogin(LoginModel login){
         return this.loginServices.guardarLogin(login);
     }
 
