@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/login.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
+import 'package:gbs_oax/providers/registro_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -18,6 +19,10 @@ class MyApp extends StatelessWidget {
             create: (_) => LoginProvider(),
             lazy: false,
           ),
+          ChangeNotifierProvider(
+            create: (_) => RegistroProvider(),
+            lazy: false,
+          )
           //lazi: constructor del provider cuando se inicialice
         ],
         child: MaterialApp(
