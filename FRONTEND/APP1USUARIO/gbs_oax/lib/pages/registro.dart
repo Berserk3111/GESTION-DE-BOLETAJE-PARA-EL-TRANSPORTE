@@ -15,7 +15,7 @@ var emailController = TextEditingController();
 var passwordController = TextEditingController();
 var repeatpassCtrlr = TextEditingController();
 
-  var fechai = 'INGRESA TU FECHA DE NACIMIENTO';
+var fechai = 'INGRESA TU FECHA DE NACIMIENTO';
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -137,8 +137,7 @@ class _RegistroState extends State<Registro> {
             )),
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(50),
             color: const Color.fromRGBO(248, 212, 90, 1),
           ),
           child: TextButton(
@@ -154,32 +153,6 @@ class _RegistroState extends State<Registro> {
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
               )),
-        ),
-        //formItemsDesign(
-        //    Icons.phone,
-        //    TextFormField(
-        //      controller: fechanacimientoController,
-        //      decoration: InputDecoration(
-        //          border: OutlineInputBorder(
-        //              borderRadius: BorderRadius.circular(50),
-        //              borderSide: BorderSide.none),
-        //          fillColor: Color(0xfff3f4f6),
-        //          filled: true,
-        //          labelText: "Fecha de nacimiento"),
-        //      //: validateMobile,
-        //    )),
-        SizedBox(
-          height: 50,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime(1969, 1, 1),
-            onDateTimeChanged: (DateTime newDateTime) {
-              String formattedDate2 =
-                  DateFormat('yyyy-MM-dd').format(newDateTime);
-              fechai = formattedDate2;
-              fechanacimientoController.text = formattedDate2;
-            },
-          ),
         ),
         formItemsDesign(
             null,
@@ -215,13 +188,14 @@ class _RegistroState extends State<Registro> {
               ),
               keyboardType: TextInputType.emailAddress,
               maxLength: 32,
-              //validator: validateEmail,
+              validator: validateEmail,
             )),
         formItemsDesign(
             Icons.remove_red_eye,
             TextFormField(
               controller: passwordController,
               obscureText: true,
+              validator: validatePassword,
               decoration: InputDecoration(
                 labelText: 'Contraseña',
               ),
@@ -283,7 +257,7 @@ class _RegistroState extends State<Registro> {
     }
   }
 
-  String? validateEmail(String value) {
+  String? validateEmail(value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = RegExp(pattern);
@@ -294,6 +268,14 @@ class _RegistroState extends State<Registro> {
     } else {
       return null;
     }
+  }
+
+  String validatePassword(value) {
+    print("valorrr $value passsword ${passwordController.text}");
+    if (value != passwordController.text) {
+      return "Las contraseñas no coinciden";
+    }
+    return "";
   }
 
   save() {
