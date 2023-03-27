@@ -218,16 +218,7 @@ class _RegistroState extends State<Registro> {
                 ),
                 keyboardType: TextInputType.emailAddress,
                 maxLength: 32,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Debes ingresar tu Correo Electronico';
-                  } else if (!RegExp(r"^[\w]+@{1}[\w]+\.[a-z]{2,3}$")
-                      .hasMatch(value)) {
-                    return 'Correo electronico incorrecto';
-                  } else {
-                    return null;
-                  }
-                },
+                validator: (value) => validateEmail(value),
               )),
           formItemsDesign(
               Icons.remove_red_eye,
