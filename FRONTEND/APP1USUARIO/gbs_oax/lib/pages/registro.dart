@@ -309,6 +309,14 @@ class _RegistroState extends State<Registro> {
     }
   }
 
+  String validatePassword(value) {
+    print("valorrr $value passsword ${passwordController.text}");
+    if (value != passwordController.text) {
+      return "Las contraseñas no coinciden";
+    }
+    return "";
+  }
+
   save() {
     if (keyForm.currentState!.validate()) {
       print("Nombre ${nombreController.text}");
