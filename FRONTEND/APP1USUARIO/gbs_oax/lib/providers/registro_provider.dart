@@ -21,10 +21,12 @@ class RegistroProvider extends ChangeNotifier {
           'password': password,
           'usuarioModel': value.data["id"]
         });
-        await dio.post('http://10.0.2.2:8090/login', data: formDatalogin);
+        await dio.post('http://10.0.2.2:8090/login', data: formDataLogin);
       });
+      return true;
     } catch (e) {
       print(e);
+      return false;
     }
   }
 }

@@ -1,5 +1,5 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors
-
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -280,29 +280,41 @@ class _RegistroState extends State<Registro> {
                       'https://firebasestorage.googleapis.com/v0/b/wox-cliente.appspot.com/o/fotoPerfil%2FperfilProvisional.jpg?alt=media&token=206a46e9-1a36-4086-a9bb-d6b7f3f398d9%27,%27verificado',
                   'tipoUsuarioModel': 1,
                 });
-                registroProvider.registro(formData, emailController.text, passwordController.text);
+                registroProvider
+                    .registro(
+                        formData, emailController.text, passwordController.text)
+                    .then((values) => {
+                          if (values == true)
+                            {
+                              //redireccionar a login
+                            }
+                          else
+                            {
+                              setState(() {
+                                final snackBar = SnackBar(
+                                  /// need to set following properties for best effect of awesome_snackbar_content
+                                  elevation: 0,
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: Colors.transparent,
+                                  content: AwesomeSnackbarContent(
+                                    title: 'Lo siento!',
+                                    message:
+                                        'Parece que no has completado todos los campos!',
+
+                                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                    contentType: ContentType.failure,
+                                  ),
+                                );
+
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(snackBar);
+
+                                const SizedBox(height: 10);
+                              })
+                            }
+                        });
               })
-          /* GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.all(30.0),
-                alignment: Alignment.center,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                  // ignore: prefer_const_literals_to_create_immutables
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 222, 118, 14),
-                    Color.fromARGB(255, 254, 49, 3),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                ),
-                child: Text("Guardar",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500)),
-                padding: EdgeInsets.only(top: 16, bottom: 16),
-              )) */
         ],
       ),
     );
@@ -326,6 +338,42 @@ class _RegistroState extends State<Registro> {
         fechanacimientoController.text = formattedDate2;
       });
     }
+  }
+
+  alert(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            title: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Alerta',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            actions: [
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(248, 212, 90, 1),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Aceptar',
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
+                ),
+              )
+            ],
+            content:
+                Text('Comprueba que ingresaste todos los datos correctamente'),
+          );
+        });
   }
 
   String? validateEmail(String? value) {
