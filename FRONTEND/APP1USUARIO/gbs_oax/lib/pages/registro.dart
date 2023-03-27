@@ -280,7 +280,7 @@ class _RegistroState extends State<Registro> {
                       'https://firebasestorage.googleapis.com/v0/b/wox-cliente.appspot.com/o/fotoPerfil%2FperfilProvisional.jpg?alt=media&token=206a46e9-1a36-4086-a9bb-d6b7f3f398d9%27,%27verificado',
                   'tipoUsuarioModel': 1,
                 });
-                registroProvider.registro(formData);
+                registroProvider.registro(formData, emailController.text, passwordController.text);
               })
           /* GestureDetector(
               onTap: () {},
