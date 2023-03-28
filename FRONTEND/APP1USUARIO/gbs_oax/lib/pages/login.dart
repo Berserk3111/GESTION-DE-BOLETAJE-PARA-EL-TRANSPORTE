@@ -21,13 +21,14 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          body: Container(
-            margin: const EdgeInsets.all(25),
-            child: getBody(),
-          )),
-    );
+        child: Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: SingleChildScrollView(
+          child: Container(
+        margin: const EdgeInsets.all(25),
+        child: getBody(),
+      )),
+    ));
   }
 
   Widget getBody() {
@@ -36,10 +37,10 @@ class _LoginState extends State<Login> {
     return Center(
         child: Column(
       children: [
-        SizedBox(height: size.size.height * 0.05),
+        SizedBox(height: size.size.height * 0.01),
         _header(context),
         _inputField(context),
-        SizedBox(height: size.size.height * 0.15),
+        SizedBox(height: size.size.height * 0.20),
         _forgotPassword(context),
         SizedBox(height: size.size.height * 0.01),
         _signup(context),
@@ -58,7 +59,9 @@ class _LoginState extends State<Login> {
               fontWeight: FontWeight.bold,
               color: Color.fromRGBO(250, 74, 12, 1)),
         ),
-        SizedBox(height: 70,),
+        SizedBox(
+          height: 70,
+        ),
         const Text(
           "Iniciar Sesión",
           textAlign: TextAlign.left,
@@ -66,11 +69,6 @@ class _LoginState extends State<Login> {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        const Text(
-          "Por favor rellena los campos con tu información",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),
         ),
         const SizedBox(height: 5),
       ],
@@ -94,7 +92,7 @@ class _LoginState extends State<Login> {
               labelText: "Email",
               prefixIcon: const Icon(Icons.person_2_outlined)),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         TextField(
           controller: passwordController,
           decoration: InputDecoration(
@@ -109,8 +107,11 @@ class _LoginState extends State<Login> {
           ),
           obscureText: true,
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 15),
         ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(250, 74, 12, 1),
+                shadowColor: Color.fromARGB(255, 0, 0, 0)),
             child: Text("Iniciar Sesión"),
             onPressed: () {
               loginProvider
@@ -120,7 +121,7 @@ class _LoginState extends State<Login> {
                           {
                             //Aqui redireccionas al Navbar
                             Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute<Null>(
+                                MaterialPageRoute<void>(
                                     builder: (BuildContext context) {
                               return Navbar();
                             }), (Route<dynamic> route) => false)
@@ -135,7 +136,8 @@ class _LoginState extends State<Login> {
                                 backgroundColor: Colors.transparent,
                                 content: AwesomeSnackbarContent(
                                   title: 'Lo siento!',
-                                  message: 'Email no registrado!',
+                                  message:
+                                      'Email no registrado, por favor registrate para iniciar sesion!',
 
                                   /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                   contentType: ContentType.failure,
@@ -146,7 +148,7 @@ class _LoginState extends State<Login> {
                                 ..hideCurrentSnackBar()
                                 ..showSnackBar(snackBar);
 
-                              const SizedBox(height: 10);
+                              const SizedBox(height: 15);
                             })
                           }
                       });
