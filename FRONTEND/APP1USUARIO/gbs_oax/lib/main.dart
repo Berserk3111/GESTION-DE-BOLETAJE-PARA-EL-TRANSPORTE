@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/login.dart';
+import 'package:gbs_oax/pages/registro.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:gbs_oax/providers/registro_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
               false, //liston de desarrollo para que no lo muestre
           title: 'GBS OAX',
           routes: {
-            'login': (_) => Login(),
+            'login': (context) => const Login(),
+            '/registro': (context) => const Registro(),
           },
           initialRoute: 'login',
         ));

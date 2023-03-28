@@ -3,6 +3,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/login.dart';
 import 'package:gbs_oax/providers/registro_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -286,7 +287,8 @@ class _RegistroState extends State<Registro> {
                     .then((values) => {
                           if (values == true)
                             {
-                              //redireccionar a login
+                              Navigator.popAndPushNamed(context, 'login'),
+                              keyForm.currentState?.reset()
                             }
                           else
                             {
