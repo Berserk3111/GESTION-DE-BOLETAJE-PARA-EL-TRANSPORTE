@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:gbs_oax/pages/login.dart';
-import 'package:http/http.dart' as http;
 
 class RegistroProvider extends ChangeNotifier {
-  RegistroProvider() {}
-
-  Dio dio = new Dio();
+  
+  Dio dio = Dio();
 
   registro(formData, email, password) async {
     try {

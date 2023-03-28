@@ -1,9 +1,7 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gbs_oax/pages/login.dart';
 import 'package:gbs_oax/providers/registro_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -100,7 +98,7 @@ class _RegistroState extends State<Registro> {
                   ),
                   validator: (value) {
                     String pattern = r'(^[a-zA-Z ]*$)';
-                    RegExp regExp = new RegExp(pattern);
+                    RegExp regExp = RegExp(pattern);
                     if (value!.isEmpty) {
                       return "El nombre es necesario";
                     } else if (!regExp.hasMatch(value)) {
@@ -123,6 +121,8 @@ class _RegistroState extends State<Registro> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Debes ingresar los datos requeridos';
+                    } else {
+                      return null;
                     }
                   })),
           formItemsDesign(
@@ -153,8 +153,6 @@ class _RegistroState extends State<Registro> {
                 keyboardType: TextInputType.phone,
                 maxLength: 10,
                 validator: (value) {
-                  String patttern = r'(^[0-9]*$)';
-                  RegExp regExp = new RegExp(patttern);
                   if (value!.isEmpty) {
                     return "El telefono es necesario";
                   } else if (value.length != 10) {

@@ -6,12 +6,10 @@ import 'package:gbs_oax/pages/login.dart';
 import 'package:http/http.dart' as http;
 
 class LoginProvider extends ChangeNotifier {
-  LoginProvider() {}
 
-  Dio dio = new Dio();
+  Dio dio = Dio();
 
   login(email, password) async {
-    var user = {};
     var url = Uri.parse('http://10.0.2.2:8090/login/iniciarSesion/');
     try {
       if (emailController.text.isNotEmpty &&
