@@ -37,12 +37,9 @@ class _LoginState extends State<Login> {
     return Center(
         child: Column(
       children: [
-        SizedBox(height: size.size.height * 0.01),
         _header(context),
         _inputField(context),
-        SizedBox(height: size.size.height * 0.20),
         _forgotPassword(context),
-        SizedBox(height: size.size.height * 0.01),
         _signup(context),
       ],
     ));
