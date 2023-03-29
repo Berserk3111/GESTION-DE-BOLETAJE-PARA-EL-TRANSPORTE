@@ -282,38 +282,34 @@ class _RegistroState extends State<Registro> {
                 registroProvider
                     .registro(
                         formData, emailController.text, passwordController.text)
-                    .then((values) => {
-                          if (values == true)
-                            {
-                              Navigator.popAndPushNamed(context, 'login'),
-                              keyForm.currentState?.reset()
-                            }
-                          else
-                            {
-                              setState(() {
-                                final snackBar = SnackBar(
-                                  /// need to set following properties for best effect of awesome_snackbar_content
-                                  elevation: 0,
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.transparent,
-                                  content: AwesomeSnackbarContent(
-                                    title: 'Lo siento!',
-                                    message:
-                                        'Parece que no has completado todos los campos!',
+                    .then((values) {
+                  if (values == true) {
+                    Navigator.popAndPushNamed(context, 'login');
+                    keyForm.currentState?.reset();
+                  } else {
+                    setState(() {});
+                    final snackBar = SnackBar(
+                      /// need to set following properties for best effect of awesome_snackbar_content
+                      elevation: 0,
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      content: AwesomeSnackbarContent(
+                        title: 'Lo siento!',
+                        message:
+                            'Parece que no has completado todos los campos!',
 
-                                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                    contentType: ContentType.failure,
-                                  ),
-                                );
+                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                        contentType: ContentType.failure,
+                      ),
+                    );
 
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(snackBar);
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(snackBar);
 
-                                const SizedBox(height: 10);
-                              })
-                            }
-                        });
+                    const SizedBox(height: 10);
+                  }
+                });
               })
         ],
       ),

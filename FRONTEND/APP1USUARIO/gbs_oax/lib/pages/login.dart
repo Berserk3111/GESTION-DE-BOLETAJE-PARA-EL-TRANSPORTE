@@ -113,42 +113,37 @@ class _LoginState extends State<Login> {
             onPressed: () {
               loginProvider
                   .login(emailController.text, passwordController.text)
-                  .then((values) => {
-                        if (values.length > 0)
-                          {
-                            //Aqui redireccionas al Navbar
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute<void>(
-                                    builder: (BuildContext context) {
-                              return Navbar();
-                            }), (Route<dynamic> route) => false)
-                          }
-                        else
-                          {
-                            setState(() {
-                              final snackBar = SnackBar(
-                                /// need to set following properties for best effect of awesome_snackbar_content
-                                elevation: 0,
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: Colors.transparent,
-                                content: AwesomeSnackbarContent(
-                                  title: 'Lo siento!',
-                                  message:
-                                      'Email no registrado, por favor registrate para iniciar sesion!',
+                  .then((values) {
+                if (values.length > 0) {
+                  //Aqui redireccionas al Navbar
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return Navbar();
+                  }), (Route<dynamic> route) => false);
+                } else {
+                  setState(() {});
+                  final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Lo siento!',
+                      message:
+                          'Email no registrado, por favor registrate para iniciar sesion!',
 
-                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                  contentType: ContentType.failure,
-                                ),
-                              );
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
 
-                              ScaffoldMessenger.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(snackBar);
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
 
-                              const SizedBox(height: 15);
-                            })
-                          }
-                      });
+                  const SizedBox(height: 15);
+                }
+              });
             })
       ],
     );
