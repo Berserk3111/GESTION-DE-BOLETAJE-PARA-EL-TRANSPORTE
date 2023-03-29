@@ -9,6 +9,7 @@ GlobalKey<FormState> keyForm = GlobalKey();
 
 TextEditingController dateInput = TextEditingController();
 TimeOfDay selectedTime = TimeOfDay.now();
+TimeOfDay? picked;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,19 +17,19 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-Future<Null> _selectTime(BuildContext context) async {
-  final TimeOfDay? pickedTime = await showTimePicker(
-    initialTime: TimeOfDay.now(),
-    context: context,
-  );
-  if (pickedTime != null) {
-    setState(() {
-      selectedTime = pickedTime;
-    });
-  }
-}
-
 class _HomeState extends State<Home> {
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      initialTime: TimeOfDay.now(),
+      context: context,
+    );
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +70,8 @@ class _HomeState extends State<Home> {
 
   Widget getHome() {
     var size = MediaQuery.of(context);
+    CrossAxisAlignment:
+    CrossAxisAlignment.stretch;
     return (Column(children: [
       Form(
           key: keyForm,
@@ -81,7 +84,7 @@ class _HomeState extends State<Home> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide.none),
-                  fillColor: Colors.grey,
+                  fillColor: Colors.grey.shade600,
                   filled: true,
                   labelText: "Origen",
                 ),
@@ -91,7 +94,7 @@ class _HomeState extends State<Home> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide.none),
-                  fillColor: Colors.grey,
+                  fillColor: Colors.grey.shade600,
                   filled: true,
                   labelText: "Destino",
                 ),
@@ -102,7 +105,7 @@ class _HomeState extends State<Home> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                         borderSide: BorderSide.none),
-                    fillColor: Colors.grey,
+                    fillColor: Colors.grey.shade600,
                     filled: true,
                     labelText: "Fecha",
                   ),
@@ -128,7 +131,16 @@ class _HomeState extends State<Home> {
                       });
                     } else {}
                   })),
+              const SizedBox(height: 16),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 50),
+                  backgroundColor: Colors.grey.shade600,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  ),
+                  elevation: 5,
+                ),
                 child: const Text("Hora"),
                 onPressed: () => _selectTime(context),
               )
