@@ -8,12 +8,24 @@ import 'package:intl/intl.dart';
 GlobalKey<FormState> keyForm = GlobalKey();
 
 TextEditingController dateInput = TextEditingController();
+TimeOfDay selectedTime = TimeOfDay.now();
 
 class Home extends StatefulWidget {
   const Home({super.key});
-
   @override
   State<Home> createState() => _HomeState();
+}
+
+Future<Null> _selectTime(BuildContext context) async {
+  final TimeOfDay? pickedTime = await showTimePicker(
+    initialTime: TimeOfDay.now(),
+    context: context,
+  );
+  if (pickedTime != null) {
+    setState(() {
+      selectedTime = pickedTime;
+    });
+  }
 }
 
 class _HomeState extends State<Home> {
@@ -115,7 +127,11 @@ class _HomeState extends State<Home> {
                             formattedDate; //set output date to TextField value.
                       });
                     } else {}
-                  }))
+                  })),
+              ElevatedButton(
+                child: const Text("Hora"),
+                onPressed: () => _selectTime(context),
+              )
             ],
           )),
     ]));
