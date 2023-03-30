@@ -69,9 +69,10 @@ class _HomeState extends State<Home> {
   }
 
   Widget getHome() {
+    const double size02 = 25.0;
     var size = MediaQuery.of(context);
-    CrossAxisAlignment:
-    CrossAxisAlignment.stretch;
+    padding:
+    new EdgeInsets.all(10.0);
     return (Column(children: [
       Form(
           key: keyForm,
@@ -131,19 +132,36 @@ class _HomeState extends State<Home> {
                       });
                     } else {}
                   })),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 50),
-                  backgroundColor: Colors.grey.shade600,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  ),
-                  elevation: 5,
-                ),
-                child: const Text("Hora"),
-                onPressed: () => _selectTime(context),
-              )
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      backgroundColor: Colors.grey.shade600,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: const Text("Hora"),
+                    onPressed: () => _selectTime(context),
+                  )),
+                  Expanded(
+                      child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(150, 50),
+                      backgroundColor: Colors.grey.shade600,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      ),
+                      elevation: 5,
+                    ),
+                    child: const Text("Hora"),
+                    onPressed: () => _selectTime(context),
+                  ))
+                ],
+              ),
             ],
           )),
     ]));
