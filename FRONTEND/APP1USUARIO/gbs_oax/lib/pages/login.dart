@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/Navbar.dart';
 import 'package:gbs_oax/pages/registro.dart';
+import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -21,13 +22,14 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          body: Container(
-            margin: const EdgeInsets.all(25),
-            child: getBody(),
-          )),
-    );
+        child: Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: SingleChildScrollView(
+          child: Container(
+        margin: const EdgeInsets.all(25),
+        child: getBody(),
+      )),
+    ));
   }
 
   Widget getBody() {
@@ -36,12 +38,9 @@ class _LoginState extends State<Login> {
     return Center(
         child: Column(
       children: [
-        SizedBox(height: size.size.height * 0.05),
         _header(context),
         _inputField(context),
-        SizedBox(height: size.size.height * 0.15),
         _forgotPassword(context),
-        SizedBox(height: size.size.height * 0.01),
         _signup(context),
       ],
     ));
@@ -58,7 +57,9 @@ class _LoginState extends State<Login> {
               fontWeight: FontWeight.bold,
               color: Color.fromRGBO(250, 74, 12, 1)),
         ),
-        SizedBox(height: 70,),
+        SizedBox(
+          height: 70,
+        ),
         const Text(
           "Iniciar Sesión",
           textAlign: TextAlign.left,
@@ -66,11 +67,6 @@ class _LoginState extends State<Login> {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        const Text(
-          "Por favor rellena los campos con tu información",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),
         ),
         const SizedBox(height: 5),
       ],
@@ -94,7 +90,7 @@ class _LoginState extends State<Login> {
               labelText: "Email",
               prefixIcon: const Icon(Icons.person_2_outlined)),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         TextField(
           controller: passwordController,
           decoration: InputDecoration(
@@ -109,47 +105,54 @@ class _LoginState extends State<Login> {
           ),
           obscureText: true,
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 15),
         ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromRGBO(250, 74, 12, 1),
+                shadowColor: Color.fromARGB(255, 0, 0, 0)),
             child: Text("Iniciar Sesión"),
             onPressed: () {
               loginProvider
                   .login(emailController.text, passwordController.text)
-                  .then((values) => {
-                        if (values.length > 0)
-                          {
-                            //Aqui redireccionas al Navbar
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute<Null>(
-                                    builder: (BuildContext context) {
-                              return Navbar();
-                            }), (Route<dynamic> route) => false)
-                          }
-                        else
-                          {
-                            setState(() {
-                              final snackBar = SnackBar(
-                                /// need to set following properties for best effect of awesome_snackbar_content
-                                elevation: 0,
-                                behavior: SnackBarBehavior.floating,
-                                backgroundColor: Colors.transparent,
-                                content: AwesomeSnackbarContent(
-                                  title: 'Lo siento!',
-                                  message: 'Email no registrado!',
+                  .then((values) {
+                if (values.length > 0) {
+                  //Aqui redireccionas al Navbar
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) => CorridasProvider(),
+                          lazy: false,
+                        ),
+                      ],
+                      child: Navbar(),
+                    );
+                  }), (Route<dynamic> route) => false);
+                } else {
+                  setState(() {});
+                  final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Lo siento!',
+                      message:
+                          'Email no registrado, por favor registrate para iniciar sesion!',
 
-                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                  contentType: ContentType.failure,
-                                ),
-                              );
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
 
-                              ScaffoldMessenger.of(context)
-                                ..hideCurrentSnackBar()
-                                ..showSnackBar(snackBar);
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
 
-                              const SizedBox(height: 10);
-                            })
-                          }
-                      });
+                  const SizedBox(height: 15);
+                }
+              });
             })
       ],
     );
