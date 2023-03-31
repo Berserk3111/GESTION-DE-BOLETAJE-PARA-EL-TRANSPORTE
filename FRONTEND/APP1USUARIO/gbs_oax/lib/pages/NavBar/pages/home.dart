@@ -69,12 +69,12 @@ class _HomeState extends State<Home> {
   }
 
   Widget getHome() {
+    final loginProvider = Provider.of<LoginProvider>(context);
     const double size02 = 25.0;
     var size = MediaQuery.of(context);
-    padding:
-    new EdgeInsets.all(10.0);
-    return (Column(children: [
-      Form(
+    return (Padding(
+      padding: EdgeInsets.all(25),
+      child: Form(
           key: keyForm,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
@@ -100,70 +100,59 @@ class _HomeState extends State<Home> {
                   labelText: "Destino",
                 ),
               )),
-              formItemsDesign(TextFormField(
-                  controller: dateInput,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.grey.shade600,
-                    filled: true,
-                    labelText: "Fecha",
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1950),
-                        //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2100));
-
-                    if (pickedDate != null) {
-                      print(
-                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      print(
-                          formattedDate); //formatted date output using intl package =>  2021-03-16
-                      setState(() {
-                        dateInput.text =
-                            formattedDate; //set output date to TextField value.
-                      });
-                    } else {}
-                  })),
               Row(
                 children: <Widget>[
                   Expanded(
-                      child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
-                      backgroundColor: Colors.grey.shade600,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      ),
-                      elevation: 5,
-                    ),
-                    child: const Text("Hora"),
-                    onPressed: () => _selectTime(context),
-                  )),
+                      child: TextFormField(
+                          controller: dateInput,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                borderSide: BorderSide.none),
+                            fillColor: Colors.grey.shade600,
+                            filled: true,
+                            labelText: "Fecha",
+                          ),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2100));
+
+                            if (pickedDate != null) {
+                              print(
+                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate =
+                                  DateFormat('yyyy-MM-dd').format(pickedDate);
+                              print(
+                                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                              setState(() {
+                                dateInput.text =
+                                    formattedDate; //set output date to TextField value.
+                              });
+                            } else {}
+                          })),
                   Expanded(
                       child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(150, 50),
+                      minimumSize: const Size(50, 50),
                       backgroundColor: Colors.grey.shade600,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       ),
-                      elevation: 5,
+                      elevation: 2,
                     ),
                     child: const Text("Hora"),
                     onPressed: () => _selectTime(context),
                   ))
                 ],
               ),
+              card_vertical()
             ],
           )),
-    ]));
+    ));
   }
 }
