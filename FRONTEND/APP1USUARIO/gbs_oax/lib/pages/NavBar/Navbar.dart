@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/configuracion.dart';
 import 'package:gbs_oax/pages/NavBar/pages/favoritos.dart';
 import 'package:gbs_oax/pages/NavBar/pages/home.dart';
 import 'package:gbs_oax/pages/NavBar/pages/misBoletos.dart';
@@ -16,7 +17,7 @@ final items = <Widget>[
   const Icon(Icons.person, size: 40)
 ];
 
-final paginas = [Home(), MisBoletos(), Favoritos(), Perfil()];
+final paginas = [Home(), MisBoletos(), Favoritos(), Perfil(), Configuracion()];
 
 //Aqui creas tu navbar
 //El navbar llama a todas las paginas principales
@@ -29,24 +30,29 @@ class _NavbarState extends State<Navbar> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.badge_outlined),
             label: 'Mis Boletos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.directions_car_outlined),
             label: 'Favoritos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.person_outline),
             label: 'Perfil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: 'Configuracion',
           )
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );

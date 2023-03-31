@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/components/card_swiper.dart';
 import 'package:gbs_oax/pages/NavBar/pages/components/card_widget.dart';
-import 'package:gbs_oax/pages/registro.dart';
 import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 GlobalKey<FormState> keyForm = GlobalKey();
 
 TextEditingController dateInput = TextEditingController();
-TimeOfDay selectedTime = TimeOfDay.now();
+TimeOfDay? time = TimeOfDay.now();
 TimeOfDay? picked;
 
 class Home extends StatefulWidget {
@@ -18,49 +18,36 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Future<Null> _selectTime(BuildContext context) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      initialTime: TimeOfDay.now(),
-      context: context,
-    );
-    if (pickedTime != null) {
-      setState(() {
-        selectedTime = pickedTime;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final corridasProvider = Provider.of<CorridasProvider>(context);
-
-    var corridas = corridasProvider.getAllCorridas();
-    print(corridas);
-
     return Scaffold(
       appBar: AppBar(
-          elevation: 5,
+          toolbarHeight: 80,
+          elevation: 0,
           backgroundColor: Colors.white,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              const Text(
-                "Bienvenido",
-                style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(0, 0, 0, 1)),
-              ),
-              const Text(
-                "Rellena los campos para encontrar su mejor opcion de viaje",
-                maxLines: 2,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: Color.fromRGBO(0, 0, 0, 1)),
-              ),
-            ],
+          title: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                Text(
+                  "Bienvenido",
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(0, 0, 0, 1)),
+                ),
+                Text(
+                  "Rellena los campos para encontrar su mejor opcion de viaje",
+                  maxLines: 2,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromRGBO(0, 0, 0, 1)),
+                ),
+              ],
+            ),
           )),
       body: getHome(),
     );
@@ -74,89 +61,201 @@ class _HomeState extends State<Home> {
   }
 
   Widget getHome() {
-    const double size02 = 25.0;
-    var size = MediaQuery.of(context);
-    return (Padding(
-      padding: EdgeInsets.all(25),
-      child: Form(
-          key: keyForm,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              formItemsDesign(TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide.none),
-                  fillColor: Colors.grey.shade600,
-                  filled: true,
-                  labelText: "Origen",
-                ),
-              )),
-              formItemsDesign(TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide.none),
-                  fillColor: Colors.grey.shade600,
-                  filled: true,
-                  labelText: "Destino",
-                ),
-              )),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                      child: TextFormField(
-                          controller: dateInput,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
-                                borderSide: BorderSide.none),
-                            fillColor: Colors.grey.shade600,
-                            filled: true,
-                            labelText: "Fecha",
-                          ),
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2100));
+    final corridasProvider = Provider.of<CorridasProvider>(context);
 
-                            if (pickedDate != null) {
-                              print(
-                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              print(
-                                  formattedDate); //formatted date output using intl package =>  2021-03-16
-                              setState(() {
-                                dateInput.text =
-                                    formattedDate; //set output date to TextField value.
-                              });
-                            } else {}
-                          })),
-                  Expanded(
-                      child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(50, 50),
-                      backgroundColor: Colors.grey.shade600,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      ),
-                      elevation: 2,
-                    ),
-                    child: const Text("Hora"),
-                    onPressed: () => _selectTime(context),
-                  ))
-                ],
+    const double size02 = 25.0;
+
+    var size = MediaQuery.of(context);
+
+    return (Form(
+        key: keyForm,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: listaDesplegable(1),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: listaDesplegable(2),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: getFecha(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: getHora(),
+                )
+              ],
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(200, 50),
+                minimumSize: const Size(50, 50),
+                backgroundColor: Colors.grey.shade900,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                ),
+                elevation: 2,
               ),
-              card_vertical()
-            ],
-          )),
-    ));
+              child: const Text("Buscar Viaje"),
+              onPressed: () => {print("buscar")},
+            ),
+            const SizedBox(height: 30),
+            Expanded(
+                child:
+                    CardSwiper(corridas: corridasProvider.corridasPopulares)),
+            const SizedBox(
+              height: 10,
+            )
+          ],
+        )));
+  }
+
+  var hora = "Hora";
+
+  Widget getHora() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(150, 50),
+        minimumSize: const Size(50, 50),
+        backgroundColor: Colors.grey.shade900,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+        ),
+        elevation: 2,
+      ),
+      child: Text(hora),
+      onPressed: () => selectTime(context),
+    );
+  }
+
+  Widget getFecha() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          fixedSize: Size(150, 50),
+          minimumSize: const Size(50, 50),
+          backgroundColor: Colors.grey.shade900,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          ),
+          elevation: 2,
+        ),
+        onPressed: () {
+          setState(() {
+            getDatePickerWidget(context);
+          });
+        },
+        child: Text(
+          fechai,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+        ));
+  }
+
+  Widget listaDesplegable(tipo) {
+    var oficios2 = ["asd", "fgh"];
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DropdownButtonFormField(
+        items: oficios2
+            .map<DropdownMenuItem<String>>((value) => DropdownMenuItem(
+                  //value: value["nombre"].toString(),
+                  //child: Text(value["nombre"]),
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                ))
+            .toList(),
+        hint: Text(tipo == 1 ? "Origen" : "Destino",
+            style: TextStyle(color: Colors.white)),
+        icon: tipo == 1
+            ? const Icon(
+                Icons.home_outlined,
+                color: Colors.white,
+              )
+            : const Icon(Icons.location_on, color: Colors.white),
+        iconSize: 20,
+        style: const TextStyle(color: Colors.black),
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey.shade900,
+            labelText: null,
+            labelStyle: const TextStyle(color: Colors.black),
+            contentPadding: const EdgeInsets.all(8.0),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(50))),
+        elevation: 8,
+        onChanged: (value) {
+          if (tipo == 1) {
+            print("origen");
+          }
+          if (tipo == 2) {
+            print("destino");
+          }
+        },
+        validator: (value) {
+          if (tipo == 1) {
+            if (value == null) {
+              return 'Selecciona un Origen';
+            } else {
+              return null;
+            }
+          }
+          if (tipo == 2) {
+            if (value == null) {
+              return 'Selecciona un Destino';
+            } else {
+              return null;
+            }
+          }
+        },
+      ),
+    );
+  }
+
+  Future<Null> selectTime(BuildContext context) async {
+    picked = await showTimePicker(
+      context: context,
+      initialTime: time!,
+    );
+
+    if (picked != null) {
+      setState(() {
+        time = picked;
+        hora = '${time!.hour}: ${time!.minute}';
+      });
+    }
+  }
+
+  var fechai = 'Fecha';
+
+  getDatePickerWidget(BuildContext context) async {
+    int anio = DateTime.now().year - 18;
+    int mes = DateTime.now().month;
+    int dia = DateTime.now().day;
+    DateTime mayor = DateTime(anio, mes, dia);
+    DateTime? seleccion = await showDatePicker(
+      context: context,
+      initialDate: mayor,
+      firstDate: DateTime(1900),
+      lastDate: mayor,
+    );
+    if (seleccion != null) {
+      setState(() {
+        String formattedDate2 = DateFormat('yyyy-MM-dd').format(seleccion);
+        fechai = formattedDate2;
+        //fechaController.text = formattedDate2;
+        //print(fechaController.text);
+      });
+    }
   }
 }
