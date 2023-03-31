@@ -32,6 +32,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final corridasProvider = Provider.of<CorridasProvider>(context);
+
+    var corridas = corridasProvider.getAllCorridas();
+    print(corridas);
+
     return Scaffold(
       appBar: AppBar(
           elevation: 5,
@@ -69,7 +74,6 @@ class _HomeState extends State<Home> {
   }
 
   Widget getHome() {
-    final loginProvider = Provider.of<LoginProvider>(context);
     const double size02 = 25.0;
     var size = MediaQuery.of(context);
     return (Padding(

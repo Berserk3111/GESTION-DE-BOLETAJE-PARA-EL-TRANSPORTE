@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/Navbar.dart';
 import 'package:gbs_oax/pages/registro.dart';
+import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
@@ -118,7 +119,15 @@ class _LoginState extends State<Login> {
                   //Aqui redireccionas al Navbar
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return Navbar();
+                    return MultiProvider(
+                      providers: [
+                        ChangeNotifierProvider(
+                          create: (_) => CorridasProvider(),
+                          lazy: false,
+                        ),
+                      ],
+                      child: Navbar(),
+                    );
                   }), (Route<dynamic> route) => false);
                 } else {
                   setState(() {});
