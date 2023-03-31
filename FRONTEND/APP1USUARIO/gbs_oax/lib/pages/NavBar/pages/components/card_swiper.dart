@@ -41,9 +41,9 @@ class _CardSwiperState extends State<CardSwiper> {
         Expanded(
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
+              itemCount: widget.corridas.length, //aui debe cambiarse
               itemBuilder: (_, int index) {
-                return card_vertical();
+                return card_vertical(corrida: widget.corridas[index]);
               }),
         )
       ]),

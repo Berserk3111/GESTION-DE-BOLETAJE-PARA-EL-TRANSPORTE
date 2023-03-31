@@ -25,8 +25,8 @@ class _HomeState extends State<Home> {
           toolbarHeight: 80,
           elevation: 0,
           backgroundColor: Colors.white,
-          title: const Padding(
-            padding: EdgeInsets.all(8.0),
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // ignore: prefer_const_literals_to_create_immutables
