@@ -13,15 +13,15 @@ class _card_verticalState extends State<card_vertical> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 260,
+      width: 250,
       child: Card(
           clipBehavior: Clip.hardEdge,
-          elevation: 8,
+          elevation: 5,
           color: Colors.grey.shade900,
-          margin: EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
           shadowColor: Colors.grey,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           child: InkWell(
               splashColor: Colors.grey.shade800,
@@ -34,27 +34,36 @@ class _card_verticalState extends State<card_vertical> {
               },
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 65,
-                    backgroundColor: Colors.grey.shade900,
-                    backgroundImage: NetworkImage(
-                        "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg"),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100), // Image border
+                    child: SizedBox.fromSize(
+                      size: Size.fromRadius(70), // Image radius
+                      child: Image.network(
+                          'https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg',
+                          fit: BoxFit.cover),
+                    ),
                   ),
+                  // Image(
+                  //   image: const NetworkImage(
+                  //       "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg"),
+                  // ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.only(top: 9.0),
                     child: Column(
                       children: [
                         Center(
                             child: Text(
                           widget.corrida['ciudad_destino'],
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 20),
                         )),
                         Center(
                             child: Text(
                           widget.corrida['municipio_destino'],
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 15),
                         )),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 20.0),
                           child: Center(
                               child: Text(
