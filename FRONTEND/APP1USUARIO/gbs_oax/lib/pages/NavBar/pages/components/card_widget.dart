@@ -34,19 +34,10 @@ class _card_verticalState extends State<card_vertical> {
               },
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100), // Image border
-                    child: SizedBox.fromSize(
-                      size: Size.fromRadius(70), // Image radius
-                      child: Image.network(
-                          'https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg',
-                          fit: BoxFit.cover),
-                    ),
+                  Image(
+                    image: const NetworkImage(
+                        "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg"),
                   ),
-                  // Image(
-                  //   image: const NetworkImage(
-                  //       "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg"),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 9.0),
                     child: Column(
