@@ -19,23 +19,27 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
     return Scaffold(
       appBar: getAppBar(),
       body: getHome(),
-      bottomNavigationBar: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                elevation: 10,
-              ),
-              child: Text('Comprar'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ComprarBoleto(corrida: widget.corrida)));
-              }),
-        ),
+      bottomNavigationBar: getBottomButton(context),
+    );
+  }
+
+  Container getBottomButton(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              elevation: 10,
+            ),
+            child: Text('Comprar'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ComprarBoleto(corrida: widget.corrida)));
+            }),
       ),
     );
   }
@@ -47,7 +51,7 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
       iconTheme: IconThemeData(color: Colors.white, size: 30, weight: 10),
       flexibleSpace: Image.network(
           "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg",
-          fit: BoxFit.cover),
+          fit: BoxFit.fill),
       backgroundColor: Colors.white,
       title: Text(
         widget.corrida["ciudad_destino"] +
