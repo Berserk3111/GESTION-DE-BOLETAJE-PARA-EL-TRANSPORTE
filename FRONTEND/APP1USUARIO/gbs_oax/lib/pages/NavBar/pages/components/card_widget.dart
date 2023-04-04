@@ -34,7 +34,7 @@ class _card_verticalState extends State<card_vertical> {
               },
               child: Column(
                 children: [
-                  Image(
+                  const Image(
                     image: const NetworkImage(
                         "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg"),
                   ),

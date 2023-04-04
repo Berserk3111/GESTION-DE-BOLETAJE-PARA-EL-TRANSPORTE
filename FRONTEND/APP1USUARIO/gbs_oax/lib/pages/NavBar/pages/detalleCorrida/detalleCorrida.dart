@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/comprarBoleto.dart';
+import 'package:intl/intl.dart';
+
+final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol: "\$");
 
 class DetalleCorrida extends StatefulWidget {
   final corrida;
@@ -61,27 +65,53 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
               children: [
                 Center(
                     child: Text(
-                  widget.corrida['ciudad_origen'],
+                  widget.corrida['municipio_origen'],
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 20),
+                      color: Colors.orange,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 )),
                 Center(
                     child: Text(
                   widget.corrida['municipio_destino'],
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 15),
+                      color: Colors.orange,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 )),
                 Center(
                     child: Text(
-                  widget.corrida['unidadModel']['asientos_totales'].toString(),
+                  ('Asientos totales: ') +
+                      widget.corrida['unidadModel']['asientos_totales']
+                          .toString(),
                   style: const TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 15),
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
+                )),
+                Center(
+                    child: Text(
+                  ('Precio: ') +
+                      numberFormat
+                          .format(widget.corrida['costosModel']['costo']),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                 )),
                 const Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Center(
                       child: ElevatedButton(
-                          onPressed: null, child: Text('Comprar'))),
+                    child: Text('Comprar'),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ComprarBoleto(corrida: widget.corrida)));
+                    };
+                  )),
                 ),
               ],
             ),
