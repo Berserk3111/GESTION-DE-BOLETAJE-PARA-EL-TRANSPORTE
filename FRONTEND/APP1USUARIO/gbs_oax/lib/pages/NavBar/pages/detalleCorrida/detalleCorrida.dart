@@ -99,7 +99,7 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
                       fontSize: 15,
                       fontWeight: FontWeight.bold),
                 )),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Center(
                       child: ElevatedButton(
@@ -110,7 +110,7 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   ComprarBoleto(corrida: widget.corrida)));
-                    };
+                    }
                   )),
                 ),
               ],

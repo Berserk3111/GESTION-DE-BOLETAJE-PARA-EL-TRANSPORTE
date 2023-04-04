@@ -176,7 +176,7 @@ class _HomeState extends State<Home> {
                 ))
             .toList(),
         hint: Text(tipo == 1 ? "Origen" : "Destino",
-            style: TextStyle(color: Colors.white)),
+            style: const TextStyle(color: Colors.white)),
         icon: tipo == 1
             ? const Icon(
                 Icons.home_outlined,
@@ -217,6 +217,7 @@ class _HomeState extends State<Home> {
               return null;
             }
           }
+          return null;
         },
       ),
     );
