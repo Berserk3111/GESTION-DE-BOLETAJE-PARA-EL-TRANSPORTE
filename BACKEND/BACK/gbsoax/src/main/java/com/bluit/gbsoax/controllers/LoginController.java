@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluit.gbsoax.models.LoginModel;
@@ -22,32 +24,39 @@ public class LoginController {
     LoginServices loginServices;
 
     @GetMapping()
-    public ArrayList<LoginModel> obtenerLogin(){
+    public ArrayList<LoginModel> obtenerLogin() {
         return loginServices.obtenerLogin();
     }
 
     @PostMapping()
-    public LoginModel guardarLogin(LoginModel login){
-        return this.loginServices.guardarLogin(login);  
+    public LoginModel guardarLogin(LoginModel login) {
+        String hashed = new BCryptPasswordEncoder().encode(login.getPassword());
+        login.setPassword(hashed);
+        return this.loginServices.guardarLogin(login);
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<LoginModel> obtenerPorid(@PathVariable("id") Long id){
+    public Optional<LoginModel> obtenerPorid(@PathVariable("id") Long id) {
         return this.loginServices.obtenerPorId(id);
     }
 
+    @GetMapping("/prueba")
+    public Optional<LoginModel> prueba(@RequestParam String email) {
+        return this.loginServices.prueba(email);
+    }
+
     @DeleteMapping(path = "/{id}")
-    public String eliminarUsuario(@PathVariable("id") long id){
+    public String eliminarUsuario(@PathVariable("id") long id) {
         boolean ok = this.loginServices.eliminarLogin(id);
-        if(ok){
+        if (ok) {
             return "eliminado" + id;
-        }else{
+        } else {
             return "No se pudo eliminar" + id;
         }
     }
 
     @PostMapping("/iniciarSesion/")
-    public ArrayList<LoginModel> login(@RequestHeader String email, @RequestHeader String password){
-        return loginServices.login(email, password);
+    public ArrayList<LoginModel> login(@RequestBody LoginModel loginModel) {
+        return loginServices.login(loginModel.getEmail(), loginModel.getPassword());
     }
 }

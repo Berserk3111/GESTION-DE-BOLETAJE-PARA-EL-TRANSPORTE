@@ -80,6 +80,7 @@ class _LoginState extends State<Login> {
       children: [
         TextField(
           controller: emailController,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               hintText: "ejemplo@gmail.com",
               border: OutlineInputBorder(
