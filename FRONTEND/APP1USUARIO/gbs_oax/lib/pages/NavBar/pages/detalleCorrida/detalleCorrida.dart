@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/comprarBoleto.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol: "\$");
 
@@ -19,20 +20,27 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
     return Scaffold(
       appBar: getAppBar(),
       body: getHome(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: null,
+        label: Icon(Icons.favorite_outline_outlined),
+        backgroundColor: Colors.pink,
+      ),
       bottomNavigationBar: getBottomButton(context),
     );
   }
 
   Container getBottomButton(BuildContext context) {
+    BorderRadius.circular(50);
     return Container(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              elevation: 10,
-            ),
-            child: Text('Comprar'),
+                backgroundColor: Colors.black,
+                elevation: 10,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)))),
+            child: const Text('Comprar'),
             onPressed: () {
               Navigator.push(
                   context,
@@ -45,9 +53,10 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
   }
 
   AppBar getAppBar() {
+    BorderRadius.circular(80);
     return AppBar(
       toolbarHeight: 150,
-      elevation: 10,
+      elevation: 5,
       iconTheme: IconThemeData(color: Colors.white, size: 30, weight: 10),
       flexibleSpace: Image.network(
           "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg",
@@ -57,7 +66,8 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
         widget.corrida["ciudad_destino"] +
             ", " +
             widget.corrida["municipio_destino"],
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+        style:
+            GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 20),
         maxLines: 5,
       ),
     );
@@ -65,41 +75,57 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
 
   Widget getHome() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15),
       child: SizedBox(
-        width: double.infinity,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(('Origen: ') + widget.corrida['municipio_origen'],
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.orange)),
+            Text(('Destino: ') + widget.corrida['municipio_destino'],
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.orange)),
             Text(
-              widget.corrida['municipio_origen'],
-              style: const TextStyle(
-                  color: Colors.orange,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+              ('Fecha: ') + widget.corrida['fecha'].toString(),
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
             ),
             Text(
-              widget.corrida['municipio_destino'],
-              style: const TextStyle(
-                  color: Colors.orange,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
+              ('Hora: ') + widget.corrida['hora'].toString(),
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
             ),
             Text(
               ('Asientos totales: ') +
                   widget.corrida['unidadModel']['asientos_totales'].toString(),
-              style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 15,
-                  fontWeight: FontWeight.normal),
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
+            ),
+            Text(
+              ('Asientos disponibles: '),
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black),
             ),
             Text(
               ('Precio: ') +
                   numberFormat.format(widget.corrida['costosModel']['costo']),
-              style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.orange),
             ),
           ],
         ),
