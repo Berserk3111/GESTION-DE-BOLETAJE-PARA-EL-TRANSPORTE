@@ -28,8 +28,15 @@ public class LoginController {
         return loginServices.obtenerLogin();
     }
 
-    @PostMapping()
+    @PostMapping("/registro/")
     public LoginModel guardarLogin(LoginModel login) {
+        String hashed = new BCryptPasswordEncoder().encode(login.getPassword());
+        login.setPassword(hashed);
+        return this.loginServices.guardarLogin(login);
+    }
+
+    @PostMapping("/actualizar/")
+    public LoginModel actualizarLogin(LoginModel login) {
         String hashed = new BCryptPasswordEncoder().encode(login.getPassword());
         login.setPassword(hashed);
         return this.loginServices.guardarLogin(login);

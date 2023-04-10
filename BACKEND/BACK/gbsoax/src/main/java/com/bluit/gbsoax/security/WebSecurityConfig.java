@@ -32,7 +32,7 @@ public class WebSecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login/iniciarSesion/", "/login", "/usuario")
+                .antMatchers("/login/iniciarSesion/", "/login/registro/", "/usuario/registro/")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

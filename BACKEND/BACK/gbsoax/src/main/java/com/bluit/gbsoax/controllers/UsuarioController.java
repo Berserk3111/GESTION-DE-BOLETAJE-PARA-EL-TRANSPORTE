@@ -25,8 +25,13 @@ public class UsuarioController {
         return usuarioServices.obtenerUsuarios();
     }
 
-    @PostMapping()
+    @PostMapping("/registro/")
     public UsuarioModel guardarUsuario(UsuarioModel usuario){
+        return this.usuarioServices.guardarUsuario(usuario);
+    }
+
+    @PostMapping("/actualizar/")
+    public UsuarioModel actualizarUsuario(UsuarioModel usuario){
         return this.usuarioServices.guardarUsuario(usuario);
     }
 
