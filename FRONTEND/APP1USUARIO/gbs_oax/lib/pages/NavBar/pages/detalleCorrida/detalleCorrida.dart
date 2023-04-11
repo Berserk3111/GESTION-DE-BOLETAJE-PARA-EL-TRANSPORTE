@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol: "\$");
 
 class DetalleCorrida extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final corrida;
   const DetalleCorrida({Key? key, required this.corrida}) : super(key: key);
 
@@ -16,39 +17,39 @@ class DetalleCorrida extends StatefulWidget {
 class _DetalleCorridaState extends State<DetalleCorrida> {
   @override
   Widget build(BuildContext context) {
-    print(widget.corrida);
     return Scaffold(
       appBar: getAppBar(),
       body: getHome(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: null,
-        label: Icon(Icons.favorite_outline_outlined),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("button");
+        },
         backgroundColor: Colors.pink,
+        child: const Icon(Icons.favorite_border),
       ),
       bottomNavigationBar: getBottomButton(context),
     );
   }
 
-  Container getBottomButton(BuildContext context) {
+  Widget getBottomButton(BuildContext context) {
     BorderRadius.circular(50);
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                elevation: 10,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(50)))),
-            child: const Text('Comprar'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ComprarBoleto(corrida: widget.corrida)));
-            }),
-      ),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              elevation: 10,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)))),
+          child: const Text('Comprar'),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ComprarBoleto(corrida: widget.corrida)));
+          }),
     );
   }
 
@@ -57,7 +58,7 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
     return AppBar(
       toolbarHeight: 150,
       elevation: 5,
-      iconTheme: IconThemeData(color: Colors.white, size: 30, weight: 10),
+      iconTheme: const IconThemeData(color: Colors.white, size: 30, weight: 10),
       flexibleSpace: Image.network(
           "https://cdn.forbes.com.mx/2020/02/Huatulco-Sectur-Oaxaca-1.jpg",
           fit: BoxFit.fill),
@@ -74,43 +75,144 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
   }
 
   Widget getHome() {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: SizedBox(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(('Origen: ') + widget.corrida['municipio_origen'],
+            Text('Origen:  ${widget.corrida['municipio_origen']}',
+                maxLines: 3,
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 20,
                     color: Colors.orange)),
-            Text(('Destino: ') + widget.corrida['municipio_destino'],
+            const SizedBox(
+              height: 5,
+            ),
+            Text('Destino: ${widget.corrida['municipio_destino']}',
+                maxLines: 3,
                 style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 20,
                     color: Colors.orange)),
-            Text(
-              ('Fecha: ') + widget.corrida['fecha'].toString(),
-              style: GoogleFonts.montserrat(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black),
+            const SizedBox(
+              height: 20,
             ),
-            Text(
-              ('Hora: ') + widget.corrida['hora'].toString(),
-              style: GoogleFonts.montserrat(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black),
+            const Divider(
+              color: Colors.black,
+              height: 10,
             ),
-            Text(
-              ('Asientos totales: ') +
-                  widget.corrida['unidadModel']['asientos_totales'].toString(),
-              style: GoogleFonts.montserrat(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.date_range),
+                  Text(
+                    'Fecha: ${widget.corrida['fecha']}',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.timer_outlined),
+                  Text(
+                    'Hora: ${widget.corrida['hora']}',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const Icon(Icons.person),
+                Text(
+                  'Asientos Adultos: ${widget.corrida['unidadModel']['asientos_adulto'].toString()}',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Icon(Icons.elderly),
+                Text(
+                  'Asientos Adultos Mayores: ${widget.corrida['unidadModel']['asientos_adultom'].toString()}',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Icon(Icons.child_care),
+                Text(
+                  'Asientos Niños: ${widget.corrida['unidadModel']['asientos_niños'].toString()}',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Icon(Icons.airline_seat_recline_normal_rounded),
+                Text(
+                  'Asientos totales: ${widget.corrida['unidadModel']['asientos_totales'].toString()}',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Text(
               ('Asientos disponibles: '),
@@ -119,13 +221,24 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
                   fontWeight: FontWeight.normal,
                   color: Colors.black),
             ),
-            Text(
-              ('Precio: ') +
-                  numberFormat.format(widget.corrida['costosModel']['costo']),
-              style: GoogleFonts.montserrat(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.orange),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 10,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                'Precio: ${numberFormat.format(widget.corrida['costosModel']['costo'])}',
+                style: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange),
+              ),
             ),
           ],
         ),
