@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/Navbar.dart';
 import 'package:gbs_oax/pages/registro.dart';
+import 'package:gbs_oax/providers/boletos_provider.dart';
 import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:gbs_oax/providers/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -123,6 +124,10 @@ class _LoginState extends State<Login> {
                       providers: [
                         ChangeNotifierProvider(
                           create: (_) => CorridasProvider(),
+                          lazy: false,
+                        ),
+                        ChangeNotifierProvider(
+                          create: (_) => BoletosProvider(),
                           lazy: false,
                         ),
                       ],
