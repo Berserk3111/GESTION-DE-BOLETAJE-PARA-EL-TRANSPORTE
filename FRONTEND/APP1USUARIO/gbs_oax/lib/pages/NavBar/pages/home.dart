@@ -4,6 +4,7 @@ import 'package:gbs_oax/pages/NavBar/pages/components/card_widget.dart';
 import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -33,18 +34,18 @@ class _HomeState extends State<Home> {
               children: [
                 Text(
                   "Bienvenido",
-                  style: TextStyle(
-                      fontSize: 35,
+                  style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(0, 0, 0, 1)),
+                      fontSize: 30,
+                      color: Colors.orange),
                 ),
                 Text(
                   "Rellena los campos para encontrar su mejor opcion de viaje",
                   maxLines: 2,
-                  style: TextStyle(
-                      fontSize: 12,
+                  style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.normal,
-                      color: Color.fromRGBO(0, 0, 0, 1)),
+                      fontSize: 12,
+                      color: Colors.black),
                 ),
               ],
             ),
@@ -104,7 +105,13 @@ class _HomeState extends State<Home> {
                 ),
                 elevation: 2,
               ),
-              child: const Text("Buscar Viaje"),
+              child: Text(
+                "Buscar Viaje",
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.orange),
+              ),
               onPressed: () => {print("buscar")},
             ),
             const SizedBox(height: 30),
@@ -131,7 +138,11 @@ class _HomeState extends State<Home> {
         ),
         elevation: 2,
       ),
-      child: Text(hora),
+      child: Text(
+        hora,
+        style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
+      ),
       onPressed: () => selectTime(context),
     );
   }
@@ -154,8 +165,8 @@ class _HomeState extends State<Home> {
         },
         child: Text(
           fechai,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
         ));
   }
 
@@ -175,8 +186,11 @@ class _HomeState extends State<Home> {
                   ),
                 ))
             .toList(),
-        hint: Text(tipo == 1 ? "Origen" : "Destino",
-            style: const TextStyle(color: Colors.white)),
+        hint: Text(
+          tipo == 1 ? "Origen" : "Destino",
+          style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
+        ),
         icon: tipo == 1
             ? const Icon(
                 Icons.home_outlined,

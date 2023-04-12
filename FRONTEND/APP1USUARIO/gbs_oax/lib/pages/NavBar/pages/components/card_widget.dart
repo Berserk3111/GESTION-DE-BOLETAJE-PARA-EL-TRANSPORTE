@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/detalleCorrida/detalleCorrida.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class card_vertical extends StatefulWidget {
   final corrida;
@@ -47,24 +48,27 @@ class _card_verticalState extends State<card_vertical> {
                           Center(
                               child: Text(
                             widget.corrida['ciudad_destino'],
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 20),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.white),
                           )),
                           Center(
                               child: Text(
                             widget.corrida['municipio_destino'],
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 15),
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.white),
                           )),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                          Padding(
+                            padding: EdgeInsets.only(top: 15.0),
                             child: Center(
-                                child: Text(
-                              'Mas info',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 94, 0, 1),
-                                  fontSize: 15),
-                            )),
+                                child: Text('Mas info',
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.orange))),
                           ),
                         ],
                       ),
