@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluit.gbsoax.models.TipoPaqueteModel;
-aimport com.bluit.gbsoax.services.TipoPaqueteServices;
+import com.bluit.gbsoax.services.TipoPaqueteServices;
 
 @RestController
 @RequestMapping("/tipopaquete")
