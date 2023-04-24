@@ -1,42 +1,40 @@
 package com.bluit.gbsoax.models;
-
-
+//Aqui importamos la libreria para fechas
 import java.sql.Date;
-
+//Aqui importamos toddas las librerias de Java
 import javax.persistence.*;
 
-
+//Codigo para normbar la tabla
 @Entity
 @Table(name = "usuario")
 public class UsuarioModel {
+    //Generacion de campo ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    
     private Long id;
-
     private String nombre;
     private String apellido_paterno;
     private String apellido_materno;
     private String telefono;
-    private Date fecha_nacimiento;
+    private Date fecha_nacimiento;    
+    private String sexo;
+    private String foto_perfil;
+    private Integer numero_liecencia;
+    private Integer numero_taquilla;
+    //Relacion de muchos a uno con otra tabla, llave foranea
+    @ManyToOne(fetch = 
+    FetchType.EAGER)
+    @JoinColumn(name = "id_tipoUser")
+    private TipoUsuarioModel tipoUsuarioModel;
+
+    //Funciones de Getters y Setters para obtener y escribir datos
     public Date getFecha_nacimiento() {
         return fecha_nacimiento;
     }
     public void setFecha_nacimiento(Date fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
-    private String sexo;
-    private String foto_perfil;
-    private Integer numero_liecencia;
-    private Integer numero_taquilla;
-
-    @ManyToOne(fetch = 
-    FetchType.EAGER)
-    @JoinColumn(name = "id_tipoUser")
-    private TipoUsuarioModel tipoUsuarioModel;
-
-
 
     public TipoUsuarioModel getTipoUsuarioModel() {
         return tipoUsuarioModel;
