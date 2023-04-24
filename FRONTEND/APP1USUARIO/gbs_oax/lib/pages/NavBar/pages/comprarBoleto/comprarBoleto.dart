@@ -39,49 +39,52 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
     );
   }
 
+  int _index = 0;
+
   Widget stepper() {
     int _currentStep = 0;
-    return Container(
-      child: Stepper(
-        steps: [
-          Step(
-              isActive: _currentStep == 0,
-              title: Text('Uno'),
-              content: Text('Uno')),
-          Step(
-              isActive: _currentStep == 1,
-              title: Text('Dos'),
-              content: Text('Dos')),
-          Step(
-              isActive: _currentStep == 2,
-              title: Text('Tres'),
-              content: Text('Tres')),
-          Step(
-              isActive: _currentStep == 3,
-              title: Text('Tres'),
-              content: Text('Tres'))
-        ],
-        onStepTapped: (int newIndex) {
+    return Stepper(
+      currentStep: _index,
+      onStepCancel: () {
+        if (_index > 0) {
           setState(() {
-            _currentStep = newIndex;
+            _index -= 1;
           });
-        },
-        currentStep: _currentStep,
-        onStepContinue: () {
-          if (_currentStep != 2) {
-            setState(() {
-              _currentStep += 1;
-            });
-          }
-        },
-        onStepCancel: () {
-          if (_currentStep != 0) {
-            setState(() {
-              _currentStep -= 1;
-            });
-          }
-        },
-      ),
+        }
+      },
+      onStepContinue: () {
+        if (_index <= 3) {
+          setState(() {
+            _index += 1;
+            print(_index);
+          });
+        }
+      },
+      onStepTapped: (int index) {
+        setState(() {
+          _index = index;
+        });
+      },
+      steps: <Step>[
+        Step(
+          title: Text('Step 1 title'),
+          content: Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Content for Step 1')),
+        ),
+        Step(
+          title: Text('Step 2 title'),
+          content: Text('Content for Step 2'),
+        ),
+        Step(
+          title: Text('Step 3 title'),
+          content: Text('Content for Step 3'),
+        ),
+        Step(
+          title: Text('Step 4 title'),
+          content: Text('Content for Step 4'),
+        ),
+      ],
     );
   }
 }
