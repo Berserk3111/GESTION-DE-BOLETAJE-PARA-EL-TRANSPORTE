@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:easy_stepper/easy_stepper.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 
 class ComprarBoleto extends StatefulWidget {
   final corrida;
@@ -40,51 +43,108 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
   }
 
   int _index = 0;
+  int activeStep = 0;
 
   Widget stepper() {
-    int _currentStep = 0;
-    return Stepper(
-      currentStep: _index,
-      onStepCancel: () {
-        if (_index > 0) {
-          setState(() {
-            _index -= 1;
-          });
-        }
-      },
-      onStepContinue: () {
-        if (_index <= 3) {
-          setState(() {
-            _index += 1;
-            print(_index);
-          });
-        }
-      },
-      onStepTapped: (int index) {
-        setState(() {
-          _index = index;
-        });
-      },
-      steps: <Step>[
-        Step(
-          title: Text('Step 1 title'),
-          content: Container(
-              alignment: Alignment.centerLeft,
-              child: Text('Content for Step 1')),
-        ),
-        Step(
-          title: Text('Step 2 title'),
-          content: Text('Content for Step 2'),
-        ),
-        Step(
-          title: Text('Step 3 title'),
-          content: Text('Content for Step 3'),
-        ),
-        Step(
-          title: Text('Step 4 title'),
-          content: Text('Content for Step 4'),
-        ),
-      ],
+    return Container(
+      child: EasyStepper(
+        activeStep: activeStep,
+        padding: EdgeInsetsDirectional.all(20),
+        lineLength: 70,
+        lineSpace: 10,
+        lineType: LineType.normal,
+        defaultLineColor: Colors.black,
+        finishedLineColor: Colors.orange,
+        activeStepTextColor: Colors.orange,
+        finishedStepTextColor: Colors.orange,
+        internalPadding: 0,
+        showLoadingAnimation: false,
+        stepRadius: 15,
+        showStepBorder: false,
+        lineDotRadius: 1.5,
+        steps: [
+          EasyStep(
+              customStep: CircleAvatar(
+                radius: 20,
+                backgroundColor: activeStep >= 0 ? Colors.orange : Colors.black,
+                child: Icon(
+                  Icons.chair_alt_rounded,
+                  color: Colors.white,
+                  size: 15,
+                ),
+              ),
+              customTitle: Text(
+                'Asientos',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
+              customLineWidget: Text(
+                'Prueba',
+                style: TextStyle(color: Colors.black),
+              )),
+          EasyStep(
+            customStep: CircleAvatar(
+              radius: 20,
+              backgroundColor: activeStep >= 1 ? Colors.orange : Colors.black,
+              child: Icon(
+                Icons.abc_rounded,
+                color: Colors.white,
+                size: 15,
+              ),
+            ),
+            customTitle: Text(
+              'Registro de pasajeros',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          EasyStep(
+            customStep: CircleAvatar(
+              radius: 20,
+              backgroundColor: activeStep >= 2 ? Colors.orange : Colors.black,
+              child: Icon(
+                Icons.domain_verification_rounded,
+                color: Colors.white,
+                size: 15,
+              ),
+            ),
+            customTitle: Text(
+              'Validación de datos',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          EasyStep(
+            customStep: CircleAvatar(
+              radius: 20,
+              backgroundColor: activeStep >= 3 ? Colors.orange : Colors.black,
+              child: Icon(
+                Icons.credit_card_outlined,
+                color: Colors.white,
+                size: 15,
+              ),
+            ),
+            customTitle: Text(
+              'Pago',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ],
+        onStepReached: (index) => setState(() => activeStep = index),
+      ),
     );
   }
 }
