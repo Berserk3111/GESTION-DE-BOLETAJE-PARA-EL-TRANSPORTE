@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 class MisBoletos extends StatefulWidget {
   const MisBoletos({super.key});
-
   @override
   State<MisBoletos> createState() => _MisBoletosState();
 }
