@@ -131,6 +131,35 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                         Row(
                           children: <Widget>[
                             Expanded(
+                              child: Container(
+                                width: 15,
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? Colors.blueGrey
+                                      : Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  border: Border.all(color: Colors.black),
+                                ),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Prueba'),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      Text(
+                                        'data',
+                                        style: TextStyle(
+                                          color: isSelected
+                                              ? Colors.blueGrey
+                                              : Colors.blue,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            Expanded(
                                 child: Container(
                               width: 15,
                               decoration: BoxDecoration(
