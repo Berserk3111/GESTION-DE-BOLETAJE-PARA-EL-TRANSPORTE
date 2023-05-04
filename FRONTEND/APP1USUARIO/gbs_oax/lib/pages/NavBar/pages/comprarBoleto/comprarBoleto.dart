@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/models/asientosModel.dart';
+import 'package:gbs_oax/pages/NavBar/pages/components/asientos.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -33,15 +36,31 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
   }
 
   Widget getStep() {
+    final size = MediaQuery.of(context).size;
     if (activeStep == 0) {
-      return Text("step1");
+      return Padding(
+          padding: EdgeInsets.all(8.0),
+          child: SizedBox(
+            child: Container(
+                height: 240,
+                width: size.width,
+                child: Column(
+                  children: List.generate(
+                      AsientoModel.listChairs.length,
+                      (i) => SeatRow(
+                            numSeats: AsientoModel.listChairs[i].seats,
+                            freeSeats: AsientoModel.listChairs[i].freeSeats,
+                            rowSeats: AsientoModel.listChairs[i].rowSeats,
+                          )),
+                )),
+          ));
     }
     if (activeStep == 1) {
       return Padding(
           padding: EdgeInsets.all(8.0),
           child: SizedBox(
               width: double.maxFinite,
-              height: 200,
+              height: 250,
               child: Card(
                   elevation: 10,
                   color: Colors.white,
