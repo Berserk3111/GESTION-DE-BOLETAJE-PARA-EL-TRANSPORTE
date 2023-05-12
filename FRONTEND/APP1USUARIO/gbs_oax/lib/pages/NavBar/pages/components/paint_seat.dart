@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class PaintChair extends StatelessWidget {
   final Color color;
-  const PaintChair({Key? key, this.color = const Color(0xff4D525A)})
-      : super(key: key);
+  const PaintChair({Key? key, this.color = Colors.grey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 9.0, left: 9.0, bottom: 20.0),
-      height: 28,
-      width: 28,
+      margin: EdgeInsets.only(right: 10.0, left: 10.0, bottom: 20.0),
+      height: 25,
+      width: 25,
+      transformAlignment: Alignment.topRight,
       decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(7.0)),
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(6.0)),
       child: CustomPaint(
         painter: _PainterChair(),
       ),
@@ -26,7 +26,7 @@ class _PainterChair extends CustomPainter {
     final paint = Paint()
       ..color = Color(0xff21242C)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+      ..strokeWidth = 4;
 
     final path = Path();
 

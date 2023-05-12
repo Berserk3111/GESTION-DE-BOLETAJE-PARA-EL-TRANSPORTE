@@ -42,7 +42,8 @@ dependencies:
   intl: ^0.18.0
   awesome_snackbar_content: ^0.1.1
   google_fonts: ^4.0.3
-  easy_stepper: ^0.5.0
+  easy_stepper: ^0.5.2+1
+  
   flutter_bloc: ^8.1.2
   meta: ^1.8.0
   bloc: ^8.1.1

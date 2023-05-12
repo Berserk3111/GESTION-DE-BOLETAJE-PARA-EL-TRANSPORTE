@@ -20,7 +20,7 @@ class SeatRow extends StatelessWidget {
     final urbanBloc = BlocProvider.of<UrbanBloc>(context);
     return Center(
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: List.generate(numSeats, (i) {
           if (freeSeats.contains(i + 1)) {
             return InkWell(
@@ -29,7 +29,7 @@ class SeatRow extends StatelessWidget {
                 child: BlocBuilder<UrbanBloc, UrbanState>(
                     builder: (_, state) => PaintChair(
                         color: state.selectedSeats.contains('$rowSeats${i + 1}')
-                            ? Colors.amber
+                            ? Colors.orange
                             : Colors.white)));
           }
 

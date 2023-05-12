@@ -266,7 +266,7 @@ class _RegistroState extends State<Registro> {
                 },
               )),
           ElevatedButton(
-              child: Text("asd"),
+              child: Text("Registrar"),
               onPressed: () {
                 FormData formData = FormData.fromMap({
                   'nombre': nombreController.text,

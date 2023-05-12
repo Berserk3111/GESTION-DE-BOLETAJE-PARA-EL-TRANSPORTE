@@ -18,7 +18,9 @@ class ComprarBoleto extends StatefulWidget {
 }
 
 int activeStep = 0;
-final bool isSelected = true;
+int reachedStep = 0;
+int activeStep2 = 0;
+int upperBound = 5;
 
 class _ComprarBoletoState extends State<ComprarBoleto> {
   @override
@@ -37,34 +39,81 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
 
   Widget getStep() {
     final size = MediaQuery.of(context).size;
-    if (activeStep == 0) {
+    if (activeStep2 == 0) {
       return Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(25.0),
           child: SizedBox(
             child: Container(
-                height: 240,
-                width: size.width,
-                child: Column(
-                  children: List.generate(
-                      AsientoModel.listChairs.length,
-                      (i) => SeatRow(
-                            numSeats: AsientoModel.listChairs[i].seats,
-                            freeSeats: AsientoModel.listChairs[i].freeSeats,
-                            rowSeats: AsientoModel.listChairs[i].rowSeats,
-                          )),
-                )),
+              child: Column(children: <Widget>[
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 2.5),
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                                AsientoModel.listChairs.length,
+                                (i) => SeatRow(
+                                      numSeats:
+                                          AsientoModel.listChairs[i].seats,
+                                      freeSeats:
+                                          AsientoModel.listChairs[i].freeSeats,
+                                      rowSeats:
+                                          AsientoModel.listChairs[i].rowSeats,
+                                    )),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    'Selecciona tus asientos',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                const Padding(padding: EdgeInsets.all(10)),
+                                Center(
+                                  child: Text(
+                                    'Asientos totales: ${widget.corrida['unidadModel']['asientos_totales'].toString()}',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            )),
+                      )
+                    ])
+              ]),
+            ),
           ));
     }
-    if (activeStep == 1) {
+    if (activeStep2 == 1) {
       return Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: SizedBox(
               width: double.maxFinite,
-              height: 250,
+              height: 260,
               child: Card(
                   elevation: 10,
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(25))),
                   child: Form(
                     key: keyForm,
@@ -76,7 +125,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.all(15.5),
+                              padding: const EdgeInsets.all(20.5),
                               child: Text(
                                 'Nombre',
                                 style: GoogleFonts.montserrat(
@@ -87,17 +136,26 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                             ),
                             Expanded(
                               child: TextFormField(
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                      borderSide: BorderSide.none),
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  labelText: "Introduce tu nombre",
-                                ),
-                              ),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                        borderSide: BorderSide.none),
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    labelText: "Introduce tu nombre",
+                                  ),
+                                  validator: (value) {
+                                    String pattern = r'(^[a-zA-Z ]*$)';
+                                    RegExp regExp = RegExp(pattern);
+                                    if (value!.isEmpty) {
+                                      return "El nombre es necesario";
+                                    } else if (!regExp.hasMatch(value)) {
+                                      return "El nombre debe de ser a-z y A-Z";
+                                    }
+                                    return null;
+                                  }),
                             ),
                           ],
                         ),
@@ -106,7 +164,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.all(15.5),
+                              padding: const EdgeInsets.all(20.5),
                               child: Text(
                                 'Apellido',
                                 style: GoogleFonts.montserrat(
@@ -118,7 +176,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                             Expanded(
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(50),
@@ -132,6 +190,62 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                           ],
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(20.5),
+                              child: Text(
+                                'Lugar de origen: ',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  '${widget.corrida['municipio_origen']}',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.orange),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(20.5),
+                              child: Text(
+                                'Lugar de destino: ',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  '${widget.corrida['municipio_destino']}',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.orange),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        /* Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -206,7 +320,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                                   ]),
                             ))
                           ],
-                        )
+                        ) */
                       ],
                     ),
                   ))));
@@ -245,104 +359,123 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
   int _index = 0;
 
   Widget stepper() {
-    return EasyStepper(
-      activeStep: activeStep,
-      padding: EdgeInsetsDirectional.all(20),
-      lineLength: 70,
-      lineSpace: 10,
-      lineType: LineType.normal,
-      defaultLineColor: Colors.black,
-      finishedLineColor: Colors.orange,
-      activeStepTextColor: Colors.orange,
-      finishedStepTextColor: Colors.orange,
-      internalPadding: 0,
-      showLoadingAnimation: false,
-      stepRadius: 15,
-      showStepBorder: false,
-      lineDotRadius: 1.5,
-      steps: [
-        EasyStep(
-          customStep: CircleAvatar(
-            radius: 20,
-            backgroundColor: activeStep >= 0 ? Colors.orange : Colors.black,
-            child: Icon(
-              Icons.chair_alt_rounded,
-              color: Colors.white,
-              size: 15,
+    return SizedBox(
+      height: 120,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(flex: 1, child: _previousStep()),
+          Expanded(
+            flex: 15,
+            child: EasyStepper(
+              activeStep: activeStep2,
+              maxReachedStep: reachedStep,
+              lineLength: 80,
+              lineSpace: 4,
+              lineType: LineType.dotted,
+              activeStepBorderColor: Colors.orange,
+              activeStepIconColor: Colors.orange,
+              activeStepTextColor: Colors.orange,
+              activeLineColor: Colors.orange,
+              activeStepBackgroundColor: Colors.white,
+              unreachedStepBackgroundColor: Colors.grey,
+              unreachedStepBorderColor: Colors.black,
+              unreachedStepIconColor: Colors.black,
+              unreachedStepTextColor: Colors.black,
+              unreachedLineColor: Colors.black,
+              finishedStepBackgroundColor: Colors.white,
+              finishedStepBorderColor: Colors.green,
+              finishedStepIconColor: Colors.green,
+              finishedStepTextColor: Colors.green,
+              finishedLineColor: Colors.green,
+              borderThickness: 10,
+              internalPadding: 15,
+              showLoadingAnimation: false,
+              steps: [
+                EasyStep(
+                  icon: const Icon(CupertinoIcons.bus),
+                  enabled: _allowTabStepping(0),
+                  customTitle: Text('Asientos',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      )),
+                ),
+                EasyStep(
+                  icon: const Icon(CupertinoIcons.doc_plaintext),
+                  enabled: _allowTabStepping(1),
+                  customTitle: Text(
+                    'Registro de pasajeros',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                EasyStep(
+                  icon: const Icon(CupertinoIcons.cart_fill_badge_plus),
+                  title: 'Checkout',
+                  lineText: 'Choose Payment Method',
+                  enabled: _allowTabStepping(2),
+                ),
+                EasyStep(
+                  icon: const Icon(CupertinoIcons.money_dollar),
+                  title: 'Payment',
+                  lineText: 'Confirm Order Items',
+                  enabled: _allowTabStepping(3),
+                ),
+                EasyStep(
+                  icon: const Icon(Icons.file_present_rounded),
+                  title: 'Order Details',
+                  lineText: 'Submit Order',
+                  enabled: _allowTabStepping(4),
+                ),
+                EasyStep(
+                  icon: const Icon(Icons.check_circle_outline),
+                  title: 'Finish',
+                  enabled: _allowTabStepping(5),
+                ),
+              ],
+              onStepReached: (index) => setState(() {
+                activeStep2 = index;
+              }),
             ),
           ),
-          customTitle: Text(
-            'Asientos',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ),
-        EasyStep(
-          customStep: CircleAvatar(
-            radius: 20,
-            backgroundColor: activeStep >= 1 ? Colors.orange : Colors.black,
-            child: Icon(
-              Icons.abc_rounded,
-              color: Colors.white,
-              size: 15,
-            ),
-          ),
-          customTitle: Text(
-            'Registro de pasajeros',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ),
-        EasyStep(
-          customStep: CircleAvatar(
-            radius: 20,
-            backgroundColor: activeStep >= 2 ? Colors.orange : Colors.black,
-            child: Icon(
-              Icons.domain_verification_rounded,
-              color: Colors.white,
-              size: 15,
-            ),
-          ),
-          customTitle: Text(
-            'Validación de datos',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ),
-        EasyStep(
-          customStep: CircleAvatar(
-            radius: 20,
-            backgroundColor: activeStep >= 3 ? Colors.orange : Colors.black,
-            child: Icon(
-              Icons.credit_card_outlined,
-              color: Colors.white,
-              size: 15,
-            ),
-          ),
-          customTitle: Text(
-            'Pago',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ),
-      ],
-      onStepReached: (index) => {
-        setState(() {
-          activeStep = index;
-        })
+          Expanded(flex: 1, child: _nextStep()),
+        ],
+      ),
+    );
+  }
+
+  Widget _nextStep() {
+    return IconButton(
+      onPressed: () {
+        if (activeStep2 < upperBound) {
+          setState(() {
+            ++activeStep2;
+            if (reachedStep < activeStep2) {
+              reachedStep = activeStep2;
+            }
+          });
+        }
       },
+      icon: const Icon(Icons.arrow_forward_ios),
+    );
+  }
+
+  /// Returns the previous button.
+  Widget _previousStep() {
+    return IconButton(
+      onPressed: () {
+        if (activeStep2 > 0) {
+          setState(() => --activeStep2);
+        }
+      },
+      icon: const Icon(Icons.arrow_back_ios),
     );
   }
 }
+
+bool _allowTabStepping(int index) => index <= reachedStep;

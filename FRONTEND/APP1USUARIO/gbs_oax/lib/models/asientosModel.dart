@@ -12,6 +12,6 @@ class AsientoModel {
     AsientoModel(rowSeats: 'C', seats: 3, freeSeats: [1, 2, 3]),
     AsientoModel(rowSeats: 'D', seats: 3, freeSeats: [1, 2, 3]),
     AsientoModel(rowSeats: 'E', seats: 3, freeSeats: [1, 2, 3]),
-    AsientoModel(rowSeats: 'F', seats: 4, freeSeats: [1, 2, 3, 4]),
+    AsientoModel(rowSeats: 'F', seats: 3, freeSeats: [1, 2, 3]),
   ];
 }
