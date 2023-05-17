@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:gbs_oax/models/asientosModel.dart';
 import 'package:gbs_oax/pages/NavBar/pages/components/asientos.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +21,7 @@ class ComprarBoleto extends StatefulWidget {
 int activeStep = 0;
 int reachedStep = 0;
 int activeStep2 = 0;
-int upperBound = 5;
+int upperBound = 4;
 
 class _ComprarBoletoState extends State<ComprarBoleto> {
   @override
@@ -356,8 +357,6 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
     );
   }
 
-  int _index = 0;
-
   Widget stepper() {
     return SizedBox(
       height: 120,
@@ -370,6 +369,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
             child: EasyStepper(
               activeStep: activeStep2,
               maxReachedStep: reachedStep,
+              steppingEnabled: true,
               lineLength: 80,
               lineSpace: 4,
               lineType: LineType.dotted,
@@ -393,6 +393,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
               showLoadingAnimation: false,
               steps: [
                 EasyStep(
+                  finishIcon: Icon(CupertinoIcons.check_mark),
                   icon: const Icon(CupertinoIcons.bus),
                   enabled: _allowTabStepping(0),
                   customTitle: Text('Asientos',
@@ -404,6 +405,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                 ),
                 EasyStep(
                   icon: const Icon(CupertinoIcons.doc_plaintext),
+                  finishIcon: Icon(CupertinoIcons.check_mark),
                   enabled: _allowTabStepping(1),
                   customTitle: Text(
                     'Registro de pasajeros',
