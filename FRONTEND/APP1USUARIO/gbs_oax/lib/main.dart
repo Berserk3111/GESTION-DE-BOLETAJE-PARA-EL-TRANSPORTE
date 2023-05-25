@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
           //lazi: constructor del provider cuando se inicialice
         ],
         child: MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+          ),
           debugShowCheckedModeBanner:
               false, //liston de desarrollo para que no lo muestre
           title: 'GBS OAX',

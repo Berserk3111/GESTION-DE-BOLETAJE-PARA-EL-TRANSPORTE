@@ -14,9 +14,9 @@ class _card_verticalState extends State<card_vertical> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: SizedBox(
-        width: 250,
+        width: 240,
         child: Card(
             clipBehavior: Clip.hardEdge,
             elevation: 5,
@@ -50,7 +50,7 @@ class _card_verticalState extends State<card_vertical> {
                             widget.corrida['ciudad_destino'],
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 14,
                                 color: Colors.white),
                           )),
                           Center(
@@ -58,7 +58,7 @@ class _card_verticalState extends State<card_vertical> {
                             widget.corrida['municipio_destino'],
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 14,
                                 color: Colors.white),
                           )),
                           Padding(
@@ -67,7 +67,7 @@ class _card_verticalState extends State<card_vertical> {
                                 child: Text('Mas info',
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 15,
+                                        fontSize: 10,
                                         color: Colors.orange))),
                           ),
                         ],

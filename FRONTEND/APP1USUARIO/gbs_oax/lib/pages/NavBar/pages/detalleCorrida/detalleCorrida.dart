@@ -43,7 +43,7 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
               backgroundColor: Colors.black,
               elevation: 10,
               shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50)))),
+                  borderRadius: BorderRadius.all(Radius.circular(80)))),
           child: const Text('Comprar'),
           onPressed: () {
             Navigator.push(
@@ -71,8 +71,8 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
         widget.corrida["ciudad_destino"] +
             ", " +
             widget.corrida["municipio_destino"],
-        style:
-            GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 20),
+        style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         maxLines: 5,
       ),
     );

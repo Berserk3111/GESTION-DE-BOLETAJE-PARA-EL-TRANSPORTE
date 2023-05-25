@@ -139,7 +139,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                               child: TextFormField(
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
+                                        vertical: 2.5, horizontal: 8),
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(50),
                                         borderSide: BorderSide.none),
@@ -178,7 +178,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
+                                      vertical: 2.5, horizontal: 8),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(50),
                                       borderSide: BorderSide.none),
@@ -200,7 +200,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                                 'Lugar de origen: ',
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
@@ -211,7 +211,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                                   '${widget.corrida['municipio_origen']}',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       color: Colors.orange),
                                 ),
                               ),
@@ -228,7 +228,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                                 'Lugar de destino: ',
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
@@ -239,7 +239,7 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                                   '${widget.corrida['municipio_destino']}',
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       color: Colors.orange),
                                 ),
                               ),
@@ -326,11 +326,87 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                     ),
                   ))));
     }
-    if (activeStep == 2) {
+    if (activeStep2 == 2) {
       return Text("step3");
     }
-    if (activeStep == 3) {
-      return Text("step4");
+    if (activeStep2 == 3) {
+      return Container(
+        margin: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.all(16.0),
+              child: Text(
+                '**** **** **** 1234',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 16.0, bottom: 16.0),
+              child: Text(
+                'Jasiel Martinez Canseco',
+                style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.black),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 16.0, bottom: 16.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Expira:',
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                  SizedBox(width: 8.0),
+                  Text(
+                    '12/25',
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 16.0, bottom: 16.0),
+              child: Row(
+                children: [
+                  Text(
+                    'CVV:',
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                  SizedBox(width: 8.0),
+                  Text(
+                    '123',
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
     } else {
       return Text("nada");
     }
@@ -417,27 +493,30 @@ class _ComprarBoletoState extends State<ComprarBoleto> {
                   ),
                 ),
                 EasyStep(
-                  icon: const Icon(CupertinoIcons.cart_fill_badge_plus),
-                  title: 'Checkout',
-                  lineText: 'Choose Payment Method',
+                  icon: const Icon(CupertinoIcons.doc_plaintext),
+                  finishIcon: Icon(CupertinoIcons.check_mark),
                   enabled: _allowTabStepping(2),
+                  customTitle: Text(
+                    'Validacion de pasajeros',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
                 EasyStep(
-                  icon: const Icon(CupertinoIcons.money_dollar),
-                  title: 'Payment',
-                  lineText: 'Confirm Order Items',
+                  icon: const Icon(CupertinoIcons.doc_plaintext),
+                  finishIcon: Icon(CupertinoIcons.check_mark),
                   enabled: _allowTabStepping(3),
-                ),
-                EasyStep(
-                  icon: const Icon(Icons.file_present_rounded),
-                  title: 'Order Details',
-                  lineText: 'Submit Order',
-                  enabled: _allowTabStepping(4),
-                ),
-                EasyStep(
-                  icon: const Icon(Icons.check_circle_outline),
-                  title: 'Finish',
-                  enabled: _allowTabStepping(5),
+                  customTitle: Text(
+                    'Pago',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
               ],
               onStepReached: (index) => setState(() {
