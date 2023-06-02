@@ -58,14 +58,14 @@ class _MisBoletosState extends State<MisBoletos> {
             );
           }
           return Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: SizedBox(
                 width: double.maxFinite,
                 height: 150,
                 child: Card(
                   elevation: 10,
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50))),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -103,7 +103,7 @@ class _MisBoletosState extends State<MisBoletos> {
                               color: Colors.black),
                         ),
                         Padding(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             child: Text(
                               'Ver codigo QR',
                               style: GoogleFonts.montserrat(

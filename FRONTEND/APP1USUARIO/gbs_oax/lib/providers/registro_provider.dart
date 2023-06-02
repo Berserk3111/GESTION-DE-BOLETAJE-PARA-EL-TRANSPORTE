@@ -7,7 +7,6 @@ class RegistroProvider extends ChangeNotifier {
 
   registro(formData, email, password) async {
     try {
-      FormData formDatalogin = FormData.fromMap({});
       await dio
           .post('http://10.0.2.2:8090/usuario', data: formData)
           .then((value) async {

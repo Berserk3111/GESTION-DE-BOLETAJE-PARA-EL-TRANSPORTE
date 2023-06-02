@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/components/card_swiper.dart';
-import 'package:gbs_oax/pages/NavBar/pages/components/card_widget.dart';
 import 'package:gbs_oax/providers/corridas_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -64,10 +63,6 @@ class _HomeState extends State<Home> {
   Widget getHome() {
     final corridasProvider = Provider.of<CorridasProvider>(context);
 
-    const double size02 = 25.0;
-
-    var size = MediaQuery.of(context);
-
     return (Form(
         key: keyForm,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -97,7 +92,7 @@ class _HomeState extends State<Home> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                fixedSize: Size(200, 50),
+                fixedSize: const Size(200, 50),
                 minimumSize: const Size(50, 50),
                 backgroundColor: Colors.grey.shade900,
                 shape: const RoundedRectangleBorder(
@@ -130,7 +125,7 @@ class _HomeState extends State<Home> {
   Widget getHora() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(150, 50),
+        fixedSize: const Size(150, 50),
         minimumSize: const Size(50, 50),
         backgroundColor: Colors.grey.shade900,
         shape: const RoundedRectangleBorder(
@@ -150,7 +145,7 @@ class _HomeState extends State<Home> {
   Widget getFecha() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(150, 50),
+          fixedSize: const Size(150, 50),
           minimumSize: const Size(50, 50),
           backgroundColor: Colors.grey.shade900,
           shape: const RoundedRectangleBorder(
@@ -237,7 +232,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<Null> selectTime(BuildContext context) async {
+  selectTime(BuildContext context) async {
     picked = await showTimePicker(
       context: context,
       initialTime: time!,

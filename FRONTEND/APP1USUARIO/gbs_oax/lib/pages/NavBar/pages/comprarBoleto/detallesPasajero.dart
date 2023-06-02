@@ -3,7 +3,7 @@ import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PassengerDetailsPage extends StatefulWidget {
-  final List<String> selectedSeats;
+  final List<int> selectedSeats;
 
   PassengerDetailsPage(this.selectedSeats);
 

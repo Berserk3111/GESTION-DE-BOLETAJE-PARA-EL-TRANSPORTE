@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmationPage extends StatelessWidget {
-  final List<String> selectedSeats;
+  final List<int> selectedSeats;
   final String name;
   final String email;
 
