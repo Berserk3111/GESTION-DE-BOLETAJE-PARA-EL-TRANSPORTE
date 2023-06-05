@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/detallesPasajero.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,7 +16,10 @@ class SeatSelectionPage extends StatefulWidget {
 class _SeatSelectionPageState extends State<SeatSelectionPage> {
   List<int> selectedSeats = [];
 
-  Icon seat = Icon(Icons.event_seat);
+  Icon seat = Icon(
+    Icons.event_seat,
+    size: 100,
+  );
 
   int? tipoPasaje;
 
@@ -32,7 +37,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
 
   Icon getIcon(index) {
     if (selectedSeats.contains(index)) {
-      return (Icon(Icons.airline_seat_legroom_normal));
+      return (Icon(Icons.event_seat_rounded));
     } else {
       return (Icon(Icons.event_seat));
     }
@@ -61,7 +66,11 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(child: getHome()),
-          const Text("Seleccione el Tipo de Asiento"),
+          Text("Seleccione el Tipo de Asiento",
+              style: GoogleFonts.montserrat(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(
@@ -82,7 +91,11 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                         });
                       },
                     ),
-                    const Text("Niño")
+                    Text("Niño",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            color: Colors.black))
                   ],
                 ),
                 Row(
@@ -99,7 +112,11 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                         });
                       },
                     ),
-                    const Text("Adulto")
+                    Text("Adulto",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            color: Colors.black))
                   ],
                 ),
                 Row(
@@ -116,10 +133,18 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                         });
                       },
                     ),
-                    const Text("Tercera Edad")
+                    Text("Tercera Edad",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            color: Colors.black))
                   ],
                 ),
-                Text("Asientos Totales: ${selectedSeats.length}")
+                Text("Asientos Totales: ${selectedSeats.length}",
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.orange))
               ],
             ),
           )
@@ -127,12 +152,16 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PassengerDetailsPage(selectedSeats),
-            ),
-          );
+          if (selectedSeats.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PassengerDetailsPage(selectedSeats),
+              ),
+            );
+          } else {
+            print('Selecciona algo');
+          }
         },
         child: Icon(Icons.arrow_forward),
       ),
@@ -142,7 +171,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
   AppBar getAppBar() {
     BorderRadius.circular(80);
     return AppBar(
-      toolbarHeight: 100,
+      toolbarHeight: 70,
       elevation: 5,
       iconTheme: const IconThemeData(color: Colors.black, size: 30, weight: 10),
       backgroundColor: Colors.white,
@@ -156,14 +185,20 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
 
   Widget getHome() {
     return Container(
-      color: Colors.red,
+      width: 250,
+      color: Colors.grey.shade700,
       child: GridView.count(
         mainAxisSpacing: BorderSide.strokeAlignCenter,
-        crossAxisSpacing: 3.5,
+        crossAxisSpacing: 2.5,
         crossAxisCount: 4,
-        children: List.generate(16, (index) {
+        children: List.generate(20, (index) {
           String seatNumber = 'Asiento ${index + 1}';
-          if (index != 2 && index != 6 && index != 10) {
+          if (index != 0 &&
+              index != 1 &&
+              index != 7 &&
+              index != 6 &&
+              index != 10 &&
+              index != 14) {
             return GestureDetector(
                 onTap: () {
                   if (tipoPasaje == null) {
@@ -173,7 +208,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                   }
                 },
                 child: Container(
-                  width: 100,
+                  width: 250,
                   height: 100,
                   margin: EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -185,7 +220,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                   child: Center(child: getIcon(index)),
                 ));
           } else {
-            return (Icon(Icons.transfer_within_a_station));
+            return (Icon(Icons.block_outlined));
           }
         }),
       ),
