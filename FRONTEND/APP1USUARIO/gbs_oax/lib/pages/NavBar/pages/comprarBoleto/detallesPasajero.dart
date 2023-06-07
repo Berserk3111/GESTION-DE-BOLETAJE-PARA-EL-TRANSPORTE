@@ -39,8 +39,8 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ConfirmationPage(widget.selectedSeats,
-                        nombreController.text, emailController.text),
+                    builder: (context) =>
+                        ConfirmationPage(widget.selectedSeats, name, email),
                   ),
                 );
               },
