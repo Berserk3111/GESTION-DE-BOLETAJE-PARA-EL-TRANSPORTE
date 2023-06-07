@@ -1,6 +1,5 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/detallesPasajero.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -160,7 +159,25 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
               ),
             );
           } else {
-            print('Selecciona algo');
+            setState(() {});
+            final snackBar = SnackBar(
+              /// need to set following properties for best effect of awesome_snackbar_content
+              elevation: 0,
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              content: AwesomeSnackbarContent(
+                title: 'Lo siento!',
+                message: 'Parece que no has seleccionado un boleto',
+
+                /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                contentType: ContentType.failure,
+              ),
+            );
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(snackBar);
+
+            const SizedBox(height: 10);
           }
         },
         child: Icon(Icons.arrow_forward),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/card_datos.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,35 +26,21 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              onChanged: (value) {
-                setState(() {
-                  name = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Name',
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              onChanged: (value) {
-                setState(() {
-                  email = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-            ),
-            SizedBox(height: 16),
+            Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: widget.selectedSeats.length, //aui debe cambiarse
+                    itemBuilder: (_, int index) {
+                      return Card_Boleto(asiento: widget.selectedSeats[index]);
+                    })),
+            SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        ConfirmationPage(widget.selectedSeats, name, email),
+                    builder: (context) => ConfirmationPage(widget.selectedSeats,
+                        nombreController.text, emailController.text),
                   ),
                 );
               },
