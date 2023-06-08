@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/card_datos.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class PassengerDetailsPage extends StatefulWidget {
+  static String route = 'card_datos';
   final List<int> selectedSeats;
 
   PassengerDetailsPage(this.selectedSeats);
@@ -13,8 +15,9 @@ class PassengerDetailsPage extends StatefulWidget {
 }
 
 class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
-  String name = '';
-  String email = '';
+  String get nombre => nombre.toString();
+
+  String get apellidos => apellidos.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +39,17 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
             SizedBox(height: 50),
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.push(
+                /* Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        ConfirmationPage(widget.selectedSeats, name, email),
+                    builder: (context) => ConfirmationPage(
+                      widget.selectedSeats,
+                      nombre,
+                      apellidos,
+                    ),
                   ),
-                );
+                ); */
+                print(nombre);
               },
               icon: Icon(Icons.arrow_forward_ios),
               label: Text('Continuar'),

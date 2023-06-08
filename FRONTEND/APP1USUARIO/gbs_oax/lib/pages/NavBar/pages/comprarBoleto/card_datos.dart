@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-var nombreController = TextEditingController();
-var emailController = TextEditingController();
-
 GlobalKey<FormState> keyForm = GlobalKey();
 
 class Card_Boleto extends StatefulWidget {
@@ -16,6 +13,8 @@ class Card_Boleto extends StatefulWidget {
 }
 
 class _Card_Boleto extends State<Card_Boleto> {
+  String nombre = '';
+  String apellidos = '';
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,7 +39,8 @@ class _Card_Boleto extends State<Card_Boleto> {
                       ListTile(
                         leading: Icon(Icons.confirmation_number),
                         title: Text("Pasajero"),
-                        subtitle: Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
+                        subtitle:
+                            Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
                       ),
                       Row(
                         children: [

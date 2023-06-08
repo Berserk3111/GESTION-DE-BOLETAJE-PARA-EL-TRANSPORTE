@@ -3,10 +3,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmationPage extends StatelessWidget {
   final List<int> selectedSeats;
-  final String name;
-  final String email;
+  String nombre;
+  String apellidos;
 
-  ConfirmationPage(this.selectedSeats, this.name, this.email);
+  ConfirmationPage(this.selectedSeats, this.nombre, this.apellidos);
 
   void _launchURL() async {
     String paymentURL = 'https://example.com/payment'; // URL de pago real
@@ -47,7 +47,7 @@ class ConfirmationPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            Text(name),
+            Text(nombre),
             SizedBox(height: 16),
             Text(
               'Passenger Email:',
@@ -57,7 +57,7 @@ class ConfirmationPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
-            Text(email),
+            Text(apellidos),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
