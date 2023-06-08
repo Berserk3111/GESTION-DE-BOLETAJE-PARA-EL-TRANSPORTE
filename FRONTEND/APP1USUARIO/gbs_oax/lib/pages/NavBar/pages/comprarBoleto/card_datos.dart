@@ -15,27 +15,36 @@ class Card_Boleto extends StatefulWidget {
 class _Card_Boleto extends State<Card_Boleto> {
   String nombre = '';
   String apellidos = '';
+
+  FormGroup buildForm() => fb.group({
+        'nombre': ['', Validators.required],
+        'apellidos': ['', Validators.required]
+      }, []);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ReactiveForm(
-                formGroup: FormGroup({
-                  'nombre':
-                      FormControl<String>(validators: [Validators.required]),
-                  'apellidos':
-                      FormControl<String>(validators: [Validators.required])
-                }),
-                child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    elevation: 5,
-                    color: Colors.white,
-                    shadowColor: Colors.grey,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Column(children: [
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ReactiveForm(
+          formGroup: FormGroup({
+            'nombre': FormControl<String>(validators: [Validators.required]),
+            'apellidos': FormControl<String>(validators: [Validators.required])
+          }),
+          child: Card(
+            clipBehavior: Clip.hardEdge,
+            elevation: 5,
+            color: Colors.white,
+            shadowColor: Colors.grey,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: ReactiveFormBuilder(
+                form: buildForm,
+                builder: (context, form, child) {
+                  final group = form.controls;
+                  return Column(
+                    children: [
                       ListTile(
                         leading: Icon(Icons.confirmation_number),
                         title: Text("Pasajero"),
@@ -101,7 +110,17 @@ class _Card_Boleto extends State<Card_Boleto> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [Text("Precio: \$100.00")],
                         ),
-                      )
-                    ])))));
+                      ),
+                      ElevatedButton(
+                          onPressed: (() {
+                            print(form.rawValue.toString());
+                          }), child: Icon(Icons.done))
+                    ],
+                  );
+                }),
+          ),
+        ),
+      ),
+    );
   }
 }

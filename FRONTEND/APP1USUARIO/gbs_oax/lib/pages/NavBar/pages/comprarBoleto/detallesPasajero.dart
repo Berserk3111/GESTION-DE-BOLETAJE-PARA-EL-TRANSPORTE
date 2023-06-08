@@ -15,9 +15,9 @@ class PassengerDetailsPage extends StatefulWidget {
 }
 
 class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
-  String get nombre => nombre.toString();
+  String nombre = "";
 
-  String get apellidos => apellidos.toString();
+  String apellidos = "";
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +36,10 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                     itemBuilder: (_, int index) {
                       return Card_Boleto(asiento: widget.selectedSeats[index]);
                     })),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             ElevatedButton.icon(
               onPressed: () {
-                /* Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ConfirmationPage(
@@ -48,8 +48,7 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                       apellidos,
                     ),
                   ),
-                ); */
-                print(nombre);
+                );
               },
               icon: Icon(Icons.arrow_forward_ios),
               label: Text('Continuar'),
