@@ -34,7 +34,7 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                       return Card_Boleto(asiento: widget.selectedSeats[index]);
                     })),
             SizedBox(height: 50),
-            ElevatedButton(
+            ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -44,7 +44,8 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                   ),
                 );
               },
-              child: Text('Continue'),
+              icon: Icon(Icons.arrow_forward_ios),
+              label: Text('Continuar'),
             ),
           ],
         ),

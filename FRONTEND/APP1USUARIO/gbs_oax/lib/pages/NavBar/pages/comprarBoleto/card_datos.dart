@@ -20,46 +20,88 @@ class _Card_Boleto extends State<Card_Boleto> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(3.5),
-            child: SizedBox(
-                width: 250,
-                height: 300,
-                child: ReactiveForm(
-                    formGroup: FormGroup({
-                      'name': FormControl<String>(
-                          validators: [Validators.required]),
-                      'email':
-                          FormControl<String>(validators: [Validators.required])
-                    }),
-                    child: Card(
-                        clipBehavior: Clip.hardEdge,
-                        elevation: 5,
-                        color: Colors.grey.shade900,
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        shadowColor: Colors.grey,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
+            padding: const EdgeInsets.all(8.0),
+            child: ReactiveForm(
+                formGroup: FormGroup({
+                  'nombre':
+                      FormControl<String>(validators: [Validators.required]),
+                  'apellidos':
+                      FormControl<String>(validators: [Validators.required])
+                }),
+                child: Card(
+                    clipBehavior: Clip.hardEdge,
+                    elevation: 5,
+                    color: Colors.white,
+                    shadowColor: Colors.grey,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(children: [
+                      ListTile(
+                        leading: Icon(Icons.confirmation_number),
+                        title: Text("Pasajero"),
+                        subtitle: Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Nombre(s)"),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 200,
+                              child: ReactiveTextField<String>(
+                                formControlName: 'nombre',
+                                decoration:
+                                    InputDecoration(labelText: 'Nombre'),
+                                validationMessages: {
+                                  ValidationMessage.required: (_) =>
+                                      'Please enter your name.',
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Apellido(s)"),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ReactiveTextField<String>(
+                                  formControlName: 'apellidos',
+                                  decoration:
+                                      InputDecoration(labelText: 'Apellidos'),
+                                  validationMessages: {
+                                    ValidationMessage.required: (_) =>
+                                        'Please enter your email.',
+                                    ValidationMessage.email: (_) =>
+                                        'Please enter a valid email address.',
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [Text("Precio: \$100.00")],
                         ),
-                        child: Column(children: [
-                          ReactiveTextField<String>(
-                            formControlName: 'name',
-                            decoration: InputDecoration(labelText: 'Name'),
-                            validationMessages: {
-                              ValidationMessage.required: (_) =>
-                                  'Please enter your name.',
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          ReactiveTextField<String>(
-                            formControlName: 'email',
-                            decoration: InputDecoration(labelText: 'Email'),
-                            validationMessages: {
-                              ValidationMessage.required: (_) =>
-                                  'Please enter your email.',
-                              ValidationMessage.email: (_) =>
-                                  'Please enter a valid email address.',
-                            },
-                          ),
-                        ]))))));
+                      )
+                    ])))));
   }
 }
