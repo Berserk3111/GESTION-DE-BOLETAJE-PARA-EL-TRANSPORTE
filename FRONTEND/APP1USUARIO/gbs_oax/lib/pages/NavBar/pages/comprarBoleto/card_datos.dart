@@ -16,7 +16,7 @@ class Card_Boleto extends StatefulWidget {
 class _Card_Boleto extends State<Card_Boleto> {
   String nombre = '';
   String apellidos = '';
-
+  bool submit = false;
   FormGroup buildForm() => fb.group({
         'nombre': ['', Validators.required, Validators.minLength(3)],
         'apellidos': ['', Validators.required]
@@ -30,7 +30,7 @@ class _Card_Boleto extends State<Card_Boleto> {
         child: Card(
           clipBehavior: Clip.hardEdge,
           elevation: 5,
-          color: Colors.white,
+          color: submit == false ? Colors.white : Color.fromRGBO(145, 250, 141, 1),
           shadowColor: Colors.grey,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -42,15 +42,15 @@ class _Card_Boleto extends State<Card_Boleto> {
                 return Column(
                   children: [
                     ListTile(
-                      leading: Icon(Icons.confirmation_number),
-                      title: Text("Pasajero"),
+                      leading: const Icon(Icons.confirmation_number),
+                      title: const Text("Pasajero"),
                       subtitle:
                           Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
                     ),
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text("Nombre(s)"),
                         ),
                         Padding(
@@ -60,13 +60,14 @@ class _Card_Boleto extends State<Card_Boleto> {
                               child: ReactiveFormConsumer(
                                   builder: (context, form, child) {
                                 return Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   child: ReactiveTextField(
                                     formControlName: 'nombre',
+                                    readOnly: submit,
                                     decoration: InputDecoration(
                                       hintText: 'Nombre',
                                       suffixIcon: group['nombre']!.valid
-                                          ? Icon(Icons.check)
+                                          ? const Icon(Icons.check)
                                           : null,
                                     ),
                                     validationMessages: {
@@ -80,11 +81,11 @@ class _Card_Boleto extends State<Card_Boleto> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text("Apellido(s)"),
                         ),
                         Padding(
@@ -96,8 +97,9 @@ class _Card_Boleto extends State<Card_Boleto> {
                                 child: ReactiveFormConsumer(
                                     builder: (context, form, child) {
                                   return Padding(
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     child: ReactiveTextField(
+                                      readOnly: submit,
                                       onChanged: (control) {
                                         setState(() {});
                                       },
@@ -105,7 +107,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                                       decoration: InputDecoration(
                                         hintText: 'Nombre',
                                         suffixIcon: group['apellidos']!.valid
-                                            ? Icon(Icons.check)
+                                            ? const Icon(Icons.check)
                                             : null,
                                       ),
                                       validationMessages: {
@@ -120,8 +122,8 @@ class _Card_Boleto extends State<Card_Boleto> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -130,32 +132,35 @@ class _Card_Boleto extends State<Card_Boleto> {
                     ),
                     ReactiveFormConsumer(builder: (context, form, child) {
                       return ElevatedButton(
-                          onPressed: form.valid
-                              ? () {
-                                  debugPrint(form.rawValue.toString());
-                                  setState(() {});
-                                  final snackBar = SnackBar(
-                                    /// need to set following properties for best effect of awesome_snackbar_content
-                                    elevation: 0,
-                                    behavior: SnackBarBehavior.floating,
-                                    backgroundColor: Colors.transparent,
-                                    content: AwesomeSnackbarContent(
-                                      title: 'Excelente!',
-                                      message:
-                                          'Tu boleto a sido registrado con exito',
+                          onPressed: submit == false
+                              ? form.valid
+                                  ? () {
+                                      debugPrint(form.rawValue.toString());
+                                      submit = true;
+                                      setState(() {});
+                                      final snackBar = SnackBar(
+                                        /// need to set following properties for best effect of awesome_snackbar_content
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                          title: 'Excelente!',
+                                          message:
+                                              'Tu boleto a sido registrado con exito',
 
-                                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                      contentType: ContentType.success,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(snackBar);
+                                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                          contentType: ContentType.success,
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                        ..hideCurrentSnackBar()
+                                        ..showSnackBar(snackBar);
 
-                                  const SizedBox(height: 10);
-                                }
+                                      const SizedBox(height: 10);
+                                    }
+                                  : null
                               : null,
-                          child: Icon(Icons.done_all_outlined));
+                          child: submit == false ? Icon(Icons.done) : Icon(Icons.done_all));
                     }),
                   ],
                 );

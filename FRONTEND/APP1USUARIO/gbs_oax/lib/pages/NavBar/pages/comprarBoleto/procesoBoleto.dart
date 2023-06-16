@@ -230,7 +230,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                           : Colors.grey,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Center(child: getIcon(index)),
+                    child: getIcon(index),
                   ));
             } else {
               return (const Icon(Icons.block_outlined));
