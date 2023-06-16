@@ -29,35 +29,6 @@ class ConfirmationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Selected Seats:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(selectedSeats.join(', ')),
-            SizedBox(height: 16),
-            Text(
-              'Passenger Name:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(nombre),
-            SizedBox(height: 16),
-            Text(
-              'Passenger Email:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(apellidos),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
