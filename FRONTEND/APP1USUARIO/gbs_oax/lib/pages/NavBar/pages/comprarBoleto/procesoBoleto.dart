@@ -44,7 +44,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
 
   Color getColor(index) {
     if (selectedSeats.contains(index) && tipoPasaje == 1) {
-      return Colors.green;
+      return Colors.yellow;
     }
     if (selectedSeats.contains(index) && tipoPasaje == 2) {
       return Colors.blue;
@@ -204,7 +204,8 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
           mainAxisSpacing: BorderSide.strokeAlignCenter,
           crossAxisSpacing: 2.5,
           crossAxisCount: 4,
-          children: List.generate(20, (index) {
+          children: List.generate(
+              widget.corrida['unidadModel']['asientos_totales'], (index) {
             String seatNumber = 'Asiento ${index + 1}';
             if (index != 0 &&
                 index != 1 &&
@@ -225,9 +226,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                     height: 100,
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: selectedSeats.contains(index)
-                          ? Colors.green
-                          : Colors.grey,
+                      color: getColor(index),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: getIcon(index),
