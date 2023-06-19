@@ -207,32 +207,37 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
           children: List.generate(
               widget.corrida['unidadModel']['asientos_totales'], (index) {
             String seatNumber = 'Asiento ${index + 1}';
-            if (index != 0 &&
-                index != 1 &&
-                index != 7 &&
-                index != 6 &&
-                index != 10 &&
-                index != 14) {
-              return GestureDetector(
-                  onTap: () {
-                    if (tipoPasaje == null) {
-                      print("selecciona tipo pasaje");
-                    } else {
-                      selectSeat(index);
-                    }
-                  },
-                  child: Container(
-                    width: 250,
-                    height: 100,
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: getColor(index),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: getIcon(index),
-                  ));
-            } else {
-              return (const Icon(Icons.block_outlined));
+            if (widget.corrida['unidadModel']['asientos_totales'] == 16) {
+              if (index != 0 &&
+                  index != 1 &&
+                  index != 7 &&
+                  index != 6 &&
+                  index != 10 &&
+                  index != 14) {
+                return GestureDetector(
+                    onTap: () {
+                      if (tipoPasaje == null) {
+                        print("selecciona tipo pasaje");
+                      } else {
+                        selectSeat(index);
+                      }
+                    },
+                    child: Container(
+                      width: 250,
+                      height: 100,
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: getColor(index),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: getIcon(index),
+                    ));
+              } else {
+                return (const Icon(Icons.block_outlined));
+              }
+            }
+            {
+              return null;
             }
           }),
         ),
