@@ -149,7 +149,8 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PassengerDetailsPage(selectedSeats),
+                builder: (context) => PassengerDetailsPage(selectedSeats,
+                    corrida: widget.corrida),
               ),
             );
           } else {
@@ -235,9 +236,69 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
               } else {
                 return (const Icon(Icons.block_outlined));
               }
+            } else if (widget.corrida['unidadModel']['asientos_totales'] ==
+                20) {
+              if (index != 0 &&
+                  index != 1 &&
+                  index != 7 &&
+                  index != 6 &&
+                  index != 10 &&
+                  index != 14) {
+                return GestureDetector(
+                    onTap: () {
+                      if (tipoPasaje == null) {
+                        print("selecciona tipo pasaje");
+                      } else {
+                        selectSeat(index);
+                      }
+                    },
+                    child: Container(
+                      width: 250,
+                      height: 100,
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: getColor(index),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: getIcon(index),
+                    ));
+              } else {
+                return (const Icon(Icons.block_outlined));
+              }
+            } else if (widget.corrida['unidadModel']['asientos_totales'] ==
+                24) {
+              if (index != 0 &&
+                  index != 1 &&
+                  index != 7 &&
+                  index != 6 &&
+                  index != 10 &&
+                  index != 14) {
+                return GestureDetector(
+                    onTap: () {
+                      if (tipoPasaje == null) {
+                        print("selecciona tipo pasaje");
+                      } else {
+                        selectSeat(index);
+                      }
+                    },
+                    child: Container(
+                      width: 250,
+                      height: 100,
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: getColor(index),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: getIcon(index),
+                    ));
+              } else {
+                return (const Icon(Icons.block_outlined));
+              }
             }
             {
-              return null;
+              return CircularProgressIndicator(
+                color: Colors.amber,
+              );
             }
           }),
         ),

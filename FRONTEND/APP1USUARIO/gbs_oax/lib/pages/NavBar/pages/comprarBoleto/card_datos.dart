@@ -7,7 +7,8 @@ GlobalKey<FormState> keyForm = GlobalKey();
 
 class Card_Boleto extends StatefulWidget {
   final asiento;
-  const Card_Boleto({super.key, this.asiento});
+  final corrida;
+  const Card_Boleto({super.key, this.asiento, required this.corrida});
 
   @override
   State<Card_Boleto> createState() => _Card_Boleto();
@@ -30,7 +31,8 @@ class _Card_Boleto extends State<Card_Boleto> {
         child: Card(
           clipBehavior: Clip.hardEdge,
           elevation: 5,
-          color: submit == false ? Colors.white : Color.fromRGBO(145, 250, 141, 1),
+          color:
+              submit == false ? Colors.white : Color.fromRGBO(145, 250, 141, 1),
           shadowColor: Colors.grey,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -160,7 +162,9 @@ class _Card_Boleto extends State<Card_Boleto> {
                                     }
                                   : null
                               : null,
-                          child: submit == false ? Icon(Icons.done) : Icon(Icons.done_all));
+                          child: submit == false
+                              ? Icon(Icons.done)
+                              : Icon(Icons.done_all));
                     }),
                   ],
                 );

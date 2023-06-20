@@ -17,8 +17,11 @@ void _launchURL() async {
 class PassengerDetailsPage extends StatefulWidget {
   static String route = 'card_datos';
   final List<int> selectedSeats;
+  final corrida;
 
-  PassengerDetailsPage(this.selectedSeats);
+  const PassengerDetailsPage(
+      {Key? key, required this.corrida, this.selectedSeats})
+      : super(key: key);
 
   @override
   _PassengerDetailsPageState createState() => _PassengerDetailsPageState();
@@ -44,7 +47,10 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                     scrollDirection: Axis.vertical,
                     itemCount: widget.selectedSeats.length, //aui debe cambiarse
                     itemBuilder: (_, int index) {
-                      return Card_Boleto(asiento: widget.selectedSeats[index]);
+                      return Card_Boleto(
+                        asiento: widget.selectedSeats[index],
+                        corrida: widget.corrida,
+                      );
                     })),
             const SizedBox(height: 20),
             ElevatedButton(
