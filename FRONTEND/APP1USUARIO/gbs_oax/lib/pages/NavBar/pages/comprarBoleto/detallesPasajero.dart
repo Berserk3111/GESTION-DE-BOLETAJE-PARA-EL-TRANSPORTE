@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 void _launchURL() async {
-  String paymentURL = 'https://example.com/payment'; // URL de pago real
+  String paymentURL = 'https://www.facebook.com'; // URL de pago real
 
   if (await canLaunch(paymentURL)) {
     await launch(paymentURL);
@@ -16,11 +16,11 @@ void _launchURL() async {
 
 class PassengerDetailsPage extends StatefulWidget {
   static String route = 'card_datos';
-  final List<int> selectedSeats;
+  final selectedSeats;
   final corrida;
 
   const PassengerDetailsPage(
-      {Key? key, required this.corrida, this.selectedSeats})
+      {Key? key, required this.corrida, required this.selectedSeats})
       : super(key: key);
 
   @override

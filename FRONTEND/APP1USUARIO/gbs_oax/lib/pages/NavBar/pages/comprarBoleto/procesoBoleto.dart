@@ -149,7 +149,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PassengerDetailsPage(selectedSeats,
+                builder: (context) => PassengerDetailsPage(selectedSeats: selectedSeats,
                     corrida: widget.corrida),
               ),
             );
