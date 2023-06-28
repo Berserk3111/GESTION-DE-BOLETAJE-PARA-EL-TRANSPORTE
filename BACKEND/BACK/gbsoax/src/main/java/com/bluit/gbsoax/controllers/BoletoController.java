@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluit.gbsoax.models.BoletoModel;
+import com.bluit.gbsoax.repositories.BoletoRepository;
 import com.bluit.gbsoax.services.BoletoServices;
 
 @RestController
-@RequestMapping("/boleto")
+@RequestMapping("/boleto") 
 public class BoletoController {
+    private final BoletoRepository boletoRepository;
     @Autowired
+    public BoletoController(BoletoRepository boletoRepository){
+        this.boletoRepository = boletoRepository;
+    }
     BoletoServices boletoServices;
 
     @GetMapping()
@@ -26,10 +31,10 @@ public class BoletoController {
         return boletoServices.obtenerBoletos();
     }
 
-    @PostMapping()
+    /* @PostMapping()
     public BoletoModel guardarBoleto(@RequestBody BoletoModel boleto){
         return this.boletoServices.guardarBoleto(boleto);
-    }
+    } */
 
     @GetMapping(path = "/{id}")
     public Optional<BoletoModel> obtenerPorid(@PathVariable("id") Long id){
@@ -45,4 +50,12 @@ public class BoletoController {
             return "No se pudo eliminar" + id;
         }
     }
+
+    @PostMapping("/api/insertData")
+    public String insertData(@RequestBody BoletoModel dataDto){
+        BoletoModel boletoModel = new BoletoModel(dataDto.getNombre(), dataDto.getEmail());
+        boletoRepository.save(boletoModel);
+        return "Datos guardados";
+    }
+
 }

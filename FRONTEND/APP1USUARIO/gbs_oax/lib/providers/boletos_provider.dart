@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 class BoletosProvider extends ChangeNotifier {
@@ -9,6 +9,8 @@ class BoletosProvider extends ChangeNotifier {
   BoletosProvider() {
     print("BOLETOS PROVIDER!!!");
   }
+
+  Dio dio = Dio();
 
   getAllBoletos() async {
     print("getBoletos");
