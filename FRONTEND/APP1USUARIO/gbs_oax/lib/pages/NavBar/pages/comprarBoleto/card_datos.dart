@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:http/http.dart' as http;
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -23,32 +22,6 @@ class _Card_Boleto extends State<Card_Boleto> {
         'nombre': ['', Validators.required, Validators.minLength(3)],
         'apellidos': ['', Validators.required]
       }, []);
-
-  final form = FormGroup({
-    'nombre': FormControl<String>(validators: [Validators.required]),
-    'apellidos': FormControl<String>(validators: [Validators.required]),
-  });
-
-  void submitForm() async {
-    if (form.valid) {
-      final url = Uri.parse('http://10.0.2.2:8090/boleto/api/insertData');
-      final response = await http.post(
-        url,
-        body: {
-          'nombre': form.control('nombre').value,
-          'email': form.control('apellidos').value,
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Datos enviados exitosamente
-        print('Datos enviados exitosamente');
-      } else {
-        // Error al enviar los datos
-        print('Error al enviar los datos');
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,37 +45,15 @@ class _Card_Boleto extends State<Card_Boleto> {
                   children: [
                     ListTile(
                       leading: const Icon(Icons.confirmation_number),
-                      title: Text("Pasajero",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.black)),
-                      subtitle: Text(
-                          "Tipo Pasajero, Asiento: ${widget.asiento}",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.black)),
+                      title: const Text("Pasajero"),
+                      subtitle:
+                          Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
                     ),
-                    Text('Origen:  ${widget.corrida['municipio_origen']}',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.orange)),
-                    Text('Destino:  ${widget.corrida['municipio_destino']}',
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.orange)),
                     Row(
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Nombre(s)",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.orange)),
+                          child: Text("Nombre(s)"),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -123,7 +74,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                                     ),
                                     validationMessages: {
                                       ValidationMessage.required: (error) =>
-                                          'Introduce tu(s) nombre(s)',
+                                          'Please enter your name.',
                                     },
                                     showErrors: (control) => control.touched,
                                   ),
@@ -135,13 +86,9 @@ class _Card_Boleto extends State<Card_Boleto> {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Apellido(s)",
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.orange)),
+                          child: Text("Apellido(s)"),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -160,7 +107,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                                       },
                                       formControlName: 'apellidos',
                                       decoration: InputDecoration(
-                                        hintText: 'Apellidos',
+                                        hintText: 'Nombre',
                                         suffixIcon: group['apellidos']!.valid
                                             ? const Icon(Icons.check)
                                             : null,
@@ -187,9 +134,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                     ),
                     ReactiveFormConsumer(builder: (context, form, child) {
                       return ElevatedButton(
-                          onPressed: submitForm, child: Text('Enviar')
-
-                          /* submit == false
+                          onPressed: submit == false
                               ? form.valid
                                   ? () {
                                       debugPrint(form.rawValue.toString());
@@ -216,11 +161,10 @@ class _Card_Boleto extends State<Card_Boleto> {
                                       const SizedBox(height: 10);
                                     }
                                   : null
-                              : null, */
-                          // child: submit == false
-                          //     ? Icon(Icons.done)
-                          //     : Icon(Icons.done_all));
-                          );
+                              : null,
+                          child: submit == false
+                              ? Icon(Icons.done)
+                              : Icon(Icons.done_all));
                     }),
                   ],
                 );

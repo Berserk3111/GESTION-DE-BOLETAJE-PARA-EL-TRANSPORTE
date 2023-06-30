@@ -30,11 +30,6 @@ public class BoletoModel {
 
     
 
-    public BoletoModel(String nombre, String email) {
-        this.nombre = nombre;
-        this.email = email;
-    }
-    
     @ManyToOne(fetch = 
     FetchType.EAGER)
     @JoinColumn(name = "id_costo")
