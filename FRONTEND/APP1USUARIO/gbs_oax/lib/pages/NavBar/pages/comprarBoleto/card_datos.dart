@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/providers/boletos_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:provider/provider.dart';
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -25,6 +28,7 @@ class _Card_Boleto extends State<Card_Boleto> {
 
   @override
   Widget build(BuildContext context) {
+    final boletosProvider = Provider.of<BoletosProvider>(context);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -137,9 +141,19 @@ class _Card_Boleto extends State<Card_Boleto> {
                           onPressed: submit == false
                               ? form.valid
                                   ? () {
-                                      debugPrint(form.rawValue.toString());
-                                      submit = true;
-                                      setState(() {});
+                                      FormData formData = FormData.fromMap({
+                                        'nombre': nombre.toString(),
+                                        "apellidos": apellidos.toString(),
+                                      });
+                                      boletosProvider
+                                      .Registro(
+                                        formData,nombre.toString(),apellidos.toString())
+                                        .then((values)){
+                                          if (values == true){
+                                            keyForm.currentState?.reset();
+                                            debugPrint(form.rawValue.toString());
+                                          } else {
+                                          setState(() {});
                                       final snackBar = SnackBar(
                                         /// need to set following properties for best effect of awesome_snackbar_content
                                         elevation: 0,
@@ -160,11 +174,9 @@ class _Card_Boleto extends State<Card_Boleto> {
 
                                       const SizedBox(height: 10);
                                     }
-                                  : null
-                              : null,
                           child: submit == false
                               ? Icon(Icons.done)
-                              : Icon(Icons.done_all));
+                              : Icon(Icons.done_all););
                     }),
                   ],
                 );
