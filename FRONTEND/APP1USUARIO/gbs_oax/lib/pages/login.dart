@@ -127,10 +127,6 @@ class _LoginState extends State<Login> {
                           create: (_) => CorridasProvider(),
                           lazy: false,
                         ),
-                        ChangeNotifierProvider(
-                          create: (_) => BoletosProvider(),
-                          lazy: false,
-                        ),
                       ],
                       child: Navbar(),
                     );

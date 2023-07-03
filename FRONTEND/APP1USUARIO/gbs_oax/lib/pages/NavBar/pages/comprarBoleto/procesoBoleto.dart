@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/detallesPasajero.dart';
+import 'package:gbs_oax/providers/boletos_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -149,9 +151,17 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PassengerDetailsPage(selectedSeats: selectedSeats,
-                    corrida: widget.corrida),
-              ),
+                  builder: (context) => MultiProvider(
+                        providers: [
+                          ChangeNotifierProvider(
+                            create: (_) => BoletosProvider(),
+                            lazy: false,
+                          ),
+                        ],
+                        child: PassengerDetailsPage(
+                            selectedSeats: selectedSeats,
+                            corrida: widget.corrida),
+                      )),
             );
           } else {
             setState(() {});

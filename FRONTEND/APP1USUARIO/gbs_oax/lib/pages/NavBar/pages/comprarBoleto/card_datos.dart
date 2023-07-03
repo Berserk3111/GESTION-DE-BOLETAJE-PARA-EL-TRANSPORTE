@@ -138,45 +138,37 @@ class _Card_Boleto extends State<Card_Boleto> {
                     ),
                     ReactiveFormConsumer(builder: (context, form, child) {
                       return ElevatedButton(
-                          onPressed: submit == false
-                              ? form.valid
-                                  ? () {
-                                      FormData formData = FormData.fromMap({
-                                        'nombre': nombre.toString(),
-                                        "apellidos": apellidos.toString(),
-                                      });
-                                      boletosProvider
-                                      .Registro(
-                                        formData,nombre.toString(),apellidos.toString())
-                                        .then((values)){
-                                          if (values == true){
-                                            keyForm.currentState?.reset();
-                                            debugPrint(form.rawValue.toString());
-                                          } else {
-                                          setState(() {});
-                                      final snackBar = SnackBar(
-                                        /// need to set following properties for best effect of awesome_snackbar_content
-                                        elevation: 0,
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: Colors.transparent,
-                                        content: AwesomeSnackbarContent(
-                                          title: 'Excelente!',
-                                          message:
-                                              'Tu boleto a sido registrado con exito',
+                        child: submit == false
+                            ? Icon(Icons.done)
+                            : Icon(Icons.done_all),
+                        onPressed: () {
+                          print(form.control('apellidos').value);
+                          FormData formData = FormData.fromMap({
+                            'nombre': form.control('nombre').value,
+                            "apellidos": form.control('apellidos').value,
+                          });
+                          boletosProvider.registro(formData);
 
-                                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                          contentType: ContentType.success,
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                        ..hideCurrentSnackBar()
-                                        ..showSnackBar(snackBar);
+                          final snackBar = SnackBar(
+                            /// need to set following properties for best effect of awesome_snackbar_content
+                            elevation: 0,
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            content: AwesomeSnackbarContent(
+                              title: 'Excelente!',
+                              message: 'Tu boleto a sido registrado con exito',
 
-                                      const SizedBox(height: 10);
-                                    }
-                          child: submit == false
-                              ? Icon(Icons.done)
-                              : Icon(Icons.done_all););
+                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                              contentType: ContentType.success,
+                            ),
+                          );
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(snackBar);
+
+                          const SizedBox(height: 10);
+                        },
+                      );
                     }),
                   ],
                 );

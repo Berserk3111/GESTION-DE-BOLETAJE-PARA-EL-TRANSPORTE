@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gbs_oax/pages/Bloc/Urban_bloc.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/comprarBoleto.dart';
+import 'package:gbs_oax/providers/boletos_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol: "\$");
 
@@ -50,9 +52,16 @@ class _DetalleCorridaState extends State<DetalleCorrida> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => BlocProvider(
-                          create: (_) => UrbanBloc(),
+                        create: (_) => UrbanBloc(),
+                        child: MultiProvider(
+                          providers: [
+                            ChangeNotifierProvider(
+                              create: (_) => BoletosProvider(),
+                              lazy: false,
+                            ),
+                          ],
                           child: ComprarBoleto(corrida: widget.corrida),
-                        )));
+                        ))));
           }),
     );
   }
