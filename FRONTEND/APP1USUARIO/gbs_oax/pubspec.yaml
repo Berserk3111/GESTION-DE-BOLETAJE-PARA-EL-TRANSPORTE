@@ -48,7 +48,7 @@ dependencies:
   meta: ^1.8.0
   bloc: ^8.1.1
   url_launcher: ^6.1.11
-  reactive_forms: ^15.0.0
+  reactive_forms: ^16.0.1
 
 dev_dependencies:
   flutter_test:

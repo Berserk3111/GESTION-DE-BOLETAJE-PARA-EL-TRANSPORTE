@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/card_datos.dart';
+
+void _launchURL() async {
+  String paymentURL = 'https://www.facebook.com'; // URL de pago real
+
+  if (await canLaunch(paymentURL)) {
+    await launch(paymentURL);
+  } else {
+    throw 'Could not launch $paymentURL';
+  }
+}
 
 class ConfirmationPage extends StatelessWidget {
-  final List<int> selectedSeats;
-  String nombre;
-  String apellidos;
+  final corrida;
+  final asiento;
+  final TicketData data;
 
-  ConfirmationPage(this.selectedSeats, this.nombre, this.apellidos);
+  ConfirmationPage(
+      {Key? key,
+      required this.asiento,
+      required this.corrida,
+      required this.data})
+      : super(key: key);
 
   void _launchURL() async {
     String paymentURL = 'https://example.com/payment'; // URL de pago real
@@ -29,6 +45,35 @@ class ConfirmationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'Selected Seats:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(asiento.join(', ')),
+            SizedBox(height: 16),
+            Text(
+              'Passenger Name:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(''),
+            SizedBox(height: 16),
+            Text(
+              'Passenger Email:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text('apellidos'),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {

@@ -425,10 +425,10 @@ packages:
     dependency: "direct main"
     description:
       name: reactive_forms
-      sha256: "7f3c7b53d5a875f002658bf675313d0d11795ee58cf8591f26c906b7a86c2b0a"
+      sha256: "5d42977965a41b3d72559e80a598a4eea3e53b85bd6db13c5c3951794da94e47"
       url: "https://pub.dev"
     source: hosted
-    version: "15.0.0"
+    version: "16.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -675,5 +675,5 @@ packages:
     source: hosted
     version: "6.3.0"
 sdks:
-  dart: ">=3.0.0-0 <4.0.0"
-  flutter: ">=3.7.0-0"
+  dart: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"

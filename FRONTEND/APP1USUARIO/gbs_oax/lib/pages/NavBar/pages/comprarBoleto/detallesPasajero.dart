@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/card_datos.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-
-void _launchURL() async {
-  String paymentURL = 'https://www.facebook.com'; // URL de pago real
-
-  if (await canLaunch(paymentURL)) {
-    await launch(paymentURL);
-  } else {
-    throw 'Could not launch $paymentURL';
-  }
-}
+import 'package:google_fonts/google_fonts.dart';
 
 class PassengerDetailsPage extends StatefulWidget {
   static String route = 'card_datos';
@@ -28,15 +18,15 @@ class PassengerDetailsPage extends StatefulWidget {
 }
 
 class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
-  String nombre = "";
-
-  String apellidos = "";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalles del pasajero'),
+        title: Text(
+          'Detalles del pasajero',
+          style: GoogleFonts.montserrat(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -55,53 +45,16 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Confirmación de pago'),
-                      content: Text('¿Deseas continuar con el cobro?'),
-                      actions: [
-                        TextButton(
-                          child: Text('Cancelar'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: Text('Pagar'),
-                          onPressed: () {
-                            _launchURL();
-                            Navigator.of(context).pop();
-                            Navigator.popUntil(
-                                context, (route) => route.isFirst);
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Pago Realizado'),
-                                  content:
-                                      Text('Su pago fue realizado con exito'),
-                                  actions: [
-                                    TextButton(
-                                      child: Text('OK'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ConfirmationPage(
+                        asiento: widget.selectedSeats, corrida: widget.corrida),
+                  ),
                 );
               },
-              child: Text('Pagar boletos'),
-            ),
+              child: Text('Continue'),
+            )
           ],
         ),
       ),

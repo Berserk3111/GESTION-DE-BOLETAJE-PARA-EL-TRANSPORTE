@@ -1,10 +1,14 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/detallesPasajero.dart';
 import 'package:gbs_oax/providers/boletos_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
+final numberFormat = NumberFormat.currency(locale: 'es_MX', symbol: "\$");
 
 GlobalKey<FormState> keyForm = GlobalKey();
 
@@ -17,13 +21,18 @@ class Card_Boleto extends StatefulWidget {
   State<Card_Boleto> createState() => _Card_Boleto();
 }
 
+class TicketData {
+  final String rawValue;
+
+  TicketData(this.rawValue);
+}
+
 class _Card_Boleto extends State<Card_Boleto> {
-  String nombre = '';
-  String apellidos = '';
   bool submit = false;
   FormGroup buildForm() => fb.group({
         'nombre': ['', Validators.required, Validators.minLength(3)],
-        'apellidos': ['', Validators.required]
+        'apellidos': ['', Validators.required],
+        'email': ['', Validators.required, Validators.email],
       }, []);
 
   @override
@@ -35,9 +44,8 @@ class _Card_Boleto extends State<Card_Boleto> {
         child: Card(
           clipBehavior: Clip.hardEdge,
           elevation: 5,
-          color:
-              submit == false ? Colors.white : Color.fromRGBO(145, 250, 141, 1),
-          shadowColor: Colors.grey,
+          color: submit == false ? Colors.grey.shade200 : Colors.green.shade300,
+          shadowColor: Colors.black,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
@@ -49,19 +57,36 @@ class _Card_Boleto extends State<Card_Boleto> {
                   children: [
                     ListTile(
                       leading: const Icon(Icons.confirmation_number),
-                      title: const Text("Pasajero"),
-                      subtitle:
-                          Text("Tipo Pasajero, Asiento: ${widget.asiento}"),
+                      title: Text(
+                        "Pasajero",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange),
+                      ),
+                      subtitle: Text(
+                        "Tipo Pasajero, Asiento: ${widget.asiento}",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
                     ),
                     Row(
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text("Nombre(s)"),
+                          child: Text(
+                            "Nombre(s)",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                               width: 200,
                               child: ReactiveFormConsumer(
                                   builder: (context, form, child) {
@@ -78,7 +103,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                                     ),
                                     validationMessages: {
                                       ValidationMessage.required: (error) =>
-                                          'Please enter your name.',
+                                          'Introduce tu nombre',
                                     },
                                     showErrors: (control) => control.touched,
                                   ),
@@ -87,16 +112,21 @@ class _Card_Boleto extends State<Card_Boleto> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("Apellido(s)"),
+                        Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Text(
+                            "Apellido(s)",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
+                          child: SizedBox(
                             width: 200,
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -111,14 +141,14 @@ class _Card_Boleto extends State<Card_Boleto> {
                                       },
                                       formControlName: 'apellidos',
                                       decoration: InputDecoration(
-                                        hintText: 'Nombre',
+                                        hintText: 'Apellidos',
                                         suffixIcon: group['apellidos']!.valid
                                             ? const Icon(Icons.check)
                                             : null,
                                       ),
                                       validationMessages: {
                                         'required': (error) =>
-                                            'Introduce tus apellidos'
+                                            'Introduce tu apellido paterno'
                                       },
                                       showErrors: (control) => control.touched,
                                     ),
@@ -128,46 +158,105 @@ class _Card_Boleto extends State<Card_Boleto> {
                         ),
                       ],
                     ),
-                    const Padding(
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(25.0),
+                          child: Text(
+                            "Email",
+                            style: GoogleFonts.montserrat(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              width: 200,
+                              child: ReactiveFormConsumer(
+                                  builder: (context, form, child) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: ReactiveTextField(
+                                    keyboardType: TextInputType.emailAddress,
+                                    formControlName: 'email',
+                                    readOnly: submit,
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      suffixIcon: group['email']!.valid
+                                          ? const Icon(Icons.check)
+                                          : null,
+                                    ),
+                                    validationMessages: {
+                                      ValidationMessage.required: (error) =>
+                                          'Introduce un email',
+                                    },
+                                    showErrors: (control) => control.touched,
+                                  ),
+                                );
+                              })),
+                        ),
+                      ],
+                    ),
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text("Precio: \$100.00")],
+                        children: [
+                          Text(
+                            'Precio: ${numberFormat.format(widget.corrida['costosModel']['costo'])}',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange),
+                          ),
+                        ],
                       ),
                     ),
                     ReactiveFormConsumer(builder: (context, form, child) {
                       return ElevatedButton(
+                        onPressed: submit == false
+                            ? form.valid
+                                ? () {
+                                    final ticketdata =
+                                        TicketData(form.rawValue.toString());
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ConfirmationPage(data: ticketdata),
+                                      ),
+                                    );
+                                    debugPrint(form.rawValue.toString());
+                                    submit = true;
+                                    setState(() {});
+                                    final snackBar = SnackBar(
+                                      /// need to set following properties for best effect of awesome_snackbar_content
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Excelente!',
+                                        message:
+                                            'Tu boleto a sido registrado con exito',
+
+                                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.success,
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+
+                                    const SizedBox(height: 10);
+                                  }
+                                : null
+                            : null,
                         child: submit == false
                             ? Icon(Icons.done)
                             : Icon(Icons.done_all),
-                        onPressed: () {
-                          print(form.control('apellidos').value);
-                          FormData formData = FormData.fromMap({
-                            'nombre': form.control('nombre').value,
-                            "apellidos": form.control('apellidos').value,
-                          });
-                          boletosProvider.registro(formData);
-
-                          final snackBar = SnackBar(
-                            /// need to set following properties for best effect of awesome_snackbar_content
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            content: AwesomeSnackbarContent(
-                              title: 'Excelente!',
-                              message: 'Tu boleto a sido registrado con exito',
-
-                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                              contentType: ContentType.success,
-                            ),
-                          );
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(snackBar);
-
-                          const SizedBox(height: 10);
-                        },
                       );
                     }),
                   ],

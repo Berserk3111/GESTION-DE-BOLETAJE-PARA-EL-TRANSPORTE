@@ -75,7 +75,7 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
                 style: GoogleFonts.montserrat(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black)),
+                    color: Colors.orange)),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,16 +191,11 @@ class _SeatSelectionPageState extends State<SeatSelectionPage> {
   }
 
   AppBar getAppBar() {
-    BorderRadius.circular(80);
     return AppBar(
-      toolbarHeight: 70,
-      elevation: 5,
-      iconTheme: const IconThemeData(color: Colors.black, size: 30, weight: 10),
-      backgroundColor: Colors.white,
       title: Text(
-        'Seleccion de asientos',
+        'Detalles del pasajero',
         style: GoogleFonts.montserrat(
-            fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
       ),
     );
   }
