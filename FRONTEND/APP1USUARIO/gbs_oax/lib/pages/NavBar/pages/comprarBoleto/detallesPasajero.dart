@@ -4,6 +4,12 @@ import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/confirmacionPago.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class TicketData {
+  final String rawValue;
+
+  TicketData(this.rawValue);
+}
+
 class PassengerDetailsPage extends StatefulWidget {
   static String route = 'card_datos';
   final selectedSeats;
@@ -49,7 +55,10 @@ class _PassengerDetailsPageState extends State<PassengerDetailsPage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ConfirmationPage(
-                        asiento: widget.selectedSeats, corrida: widget.corrida),
+                      asiento: widget.selectedSeats,
+                      corrida: widget.corrida,
+                      data: TicketData(''),
+                    ),
                   ),
                 );
               },

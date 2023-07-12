@@ -21,12 +21,6 @@ class Card_Boleto extends StatefulWidget {
   State<Card_Boleto> createState() => _Card_Boleto();
 }
 
-class TicketData {
-  final String rawValue;
-
-  TicketData(this.rawValue);
-}
-
 class _Card_Boleto extends State<Card_Boleto> {
   bool submit = false;
   FormGroup buildForm() => fb.group({
@@ -222,13 +216,7 @@ class _Card_Boleto extends State<Card_Boleto> {
                                 ? () {
                                     final ticketdata =
                                         TicketData(form.rawValue.toString());
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ConfirmationPage(data: ticketdata),
-                                      ),
-                                    );
+
                                     debugPrint(form.rawValue.toString());
                                     submit = true;
                                     setState(() {});

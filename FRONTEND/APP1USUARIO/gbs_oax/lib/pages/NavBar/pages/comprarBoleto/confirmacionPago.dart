@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/detallesPasajero.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gbs_oax/pages/NavBar/pages/comprarBoleto/card_datos.dart';
 
@@ -11,6 +12,8 @@ void _launchURL() async {
     throw 'Could not launch $paymentURL';
   }
 }
+
+class Ticked {}
 
 class ConfirmationPage extends StatelessWidget {
   final corrida;
@@ -56,7 +59,7 @@ class ConfirmationPage extends StatelessWidget {
             Text(asiento.join(', ')),
             SizedBox(height: 16),
             Text(
-              'Passenger Name:',
+              'Passenger Name: ${data.rawValue}',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
